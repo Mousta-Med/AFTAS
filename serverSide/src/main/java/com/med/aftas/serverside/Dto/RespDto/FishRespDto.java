@@ -5,6 +5,7 @@ import com.med.aftas.serverside.Dto.LevelDto;
 import lombok.Data;
 
 import java.util.List;
+
 @Data
 public class FishRespDto {
 

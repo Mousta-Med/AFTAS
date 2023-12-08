@@ -1,4 +1,4 @@
-package com.springboot.youquiz.Exception;
+package com.med.aftas.serverside.Exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

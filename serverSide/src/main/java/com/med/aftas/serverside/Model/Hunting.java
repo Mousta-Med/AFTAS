@@ -1,6 +1,7 @@
 package com.med.aftas.serverside.Model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,15 +23,18 @@ public class Hunting {
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "fish_id")
+    @NotNull(message = "fish id should not be null")
     private Fish fish;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "member_id")
+    @NotNull(message = "member id should not be null")
     private Member member;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "competition_id")
+    @NotNull(message = "competition id should not be null")
     private Competition competition;
 }

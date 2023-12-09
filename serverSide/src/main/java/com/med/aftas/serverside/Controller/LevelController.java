@@ -6,12 +6,13 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Validated
 @RestController
-@RequestMapping(name = "/api/v1/level")
+@RequestMapping("/api/v1/level")
 public class LevelController {
 
     @Autowired
@@ -37,12 +38,12 @@ public class LevelController {
     }
 
     @PostMapping
-    public ResponseEntity<LevelDto> saveLevel(@Valid @RequestBody LevelDto levelDto) {
+    public ResponseEntity<LevelDto> saveLevel(@RequestBody @Valid LevelDto levelDto) {
         return ResponseEntity.ok(levelServiceImpl.save(levelDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LevelDto> updateLevel(@PathVariable Integer id, @Valid @RequestBody LevelDto levelDto) {
+    public ResponseEntity<LevelDto> updateLevel(@PathVariable Integer id, @RequestBody @Valid LevelDto levelDto) {
         return ResponseEntity.ok(levelServiceImpl.update(id, levelDto));
     }
 

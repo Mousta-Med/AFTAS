@@ -12,7 +12,7 @@ public class RankingDto {
 
     private Integer score;
 
-    private Integer member_id;
+    private MemberDto member;
 
-    private String competition_code;
+    private CompetitionDto competition;
 }

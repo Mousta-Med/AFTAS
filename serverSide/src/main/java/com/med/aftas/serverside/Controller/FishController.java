@@ -7,12 +7,13 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Validated
 @RestController
-@RequestMapping(name = "/api/v1/fish")
+@RequestMapping("/api/v1/fish")
 public class FishController {
 
     @Autowired
@@ -38,17 +39,17 @@ public class FishController {
     }
 
     @PostMapping
-    public ResponseEntity<FishRespDto> saveFish(@Valid @RequestBody FishDto fishDto) {
+    public ResponseEntity<FishRespDto> saveFish(@RequestBody @Valid FishDto fishDto) {
         return ResponseEntity.ok(fishServiceImpl.save(fishDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<FishRespDto> updateFish(@PathVariable String id, @Valid @RequestBody FishDto fishDto) {
+    public ResponseEntity<FishRespDto> updateFish(@PathVariable String id, @RequestBody @Valid FishDto fishDto) {
         return ResponseEntity.ok(fishServiceImpl.update(id, fishDto));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteFish(@PathVariable(name = "id") String id) {
+    public ResponseEntity<Void> deleteFish(@PathVariable(name = "name") String id) {
         fishServiceImpl.delete(id);
         return ResponseEntity.noContent().build();
     }

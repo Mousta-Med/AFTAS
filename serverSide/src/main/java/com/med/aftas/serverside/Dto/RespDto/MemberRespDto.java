@@ -1,12 +1,15 @@
-package com.med.aftas.serverside.Dto;
+package com.med.aftas.serverside.Dto.RespDto;
 
+import com.med.aftas.serverside.Dto.HuntingDto;
+import com.med.aftas.serverside.Dto.RankingDto;
 import com.med.aftas.serverside.Enum.IdentityDocumentType;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
-public class MemberDto {
+public class MemberRespDto {
 
     private Integer id;
 
@@ -19,4 +22,8 @@ public class MemberDto {
     private String nationality;
 
     private IdentityDocumentType identityDocument;
+
+    private List<RankingDto> rankings;
+
+    private List<HuntingDto> huntings;
 }

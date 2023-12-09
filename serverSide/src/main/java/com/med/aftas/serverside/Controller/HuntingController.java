@@ -6,12 +6,13 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Validated
 @RestController
-@RequestMapping(name = "/api/v1/hunting")
+@RequestMapping("/api/v1/hunting")
 public class HuntingController {
 
     @Autowired
@@ -37,12 +38,12 @@ public class HuntingController {
     }
 
     @PostMapping
-    public ResponseEntity<HuntingDto> saveHunting(@Valid @RequestBody HuntingDto huntingDto) {
+    public ResponseEntity<HuntingDto> saveHunting(@RequestBody @Valid HuntingDto huntingDto) {
         return ResponseEntity.ok(huntingServiceImpl.save(huntingDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<HuntingDto> updateHunting(@PathVariable Integer id, @Valid @RequestBody HuntingDto huntingDto) {
+    public ResponseEntity<HuntingDto> updateHunting(@PathVariable Integer id, @RequestBody @Valid HuntingDto huntingDto) {
         return ResponseEntity.ok(huntingServiceImpl.update(id, huntingDto));
     }
 

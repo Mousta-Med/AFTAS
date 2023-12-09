@@ -9,5 +9,5 @@ public class FishDto {
 
     private Double averageWeight;
 
-    private Integer level_id;
+    private LevelDto level;
 }

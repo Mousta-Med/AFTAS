@@ -7,12 +7,13 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Validated
 @RestController
-@RequestMapping(name = "/api/v1/ranking")
+@RequestMapping("/api/v1/ranking")
 public class RankingController {
 
     @Autowired
@@ -38,12 +39,12 @@ public class RankingController {
     }
 
     @PostMapping
-    public ResponseEntity<RankingDto> saveRanking(@Valid @RequestBody RankingDto rankingDto) {
+    public ResponseEntity<RankingDto> saveRanking(@RequestBody @Valid RankingDto rankingDto) {
         return ResponseEntity.ok(rankingServiceImpl.save(rankingDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RankingDto> updateRanking(@PathVariable RankingId id, @Valid @RequestBody RankingDto rankingDto) {
+    public ResponseEntity<RankingDto> updateRanking(@PathVariable RankingId id, @RequestBody @Valid RankingDto rankingDto) {
         return ResponseEntity.ok(rankingServiceImpl.update(id, rankingDto));
     }
 

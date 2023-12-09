@@ -9,9 +9,9 @@ public class HuntingDto {
 
     private Integer numberOfFish;
 
-    private String fish_name;
+    private FishDto fish;
 
-    private Integer member_id;
+    private MemberDto member;
 
-    private String competition_code;
+    private CompetitionDto competition;
 }

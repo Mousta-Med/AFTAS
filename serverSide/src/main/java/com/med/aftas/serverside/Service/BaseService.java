@@ -1,4 +1,4 @@
-package com.springboot.youquiz.Service;
+package com.med.aftas.serverside.Service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

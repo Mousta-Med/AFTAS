@@ -1,4 +1,4 @@
-package com.springboot.youquiz.Config;
+package com.med.aftas.serverside.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

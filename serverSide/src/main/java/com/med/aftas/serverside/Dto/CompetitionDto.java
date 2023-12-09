@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class CompetitionDto {
@@ -21,4 +22,8 @@ public class CompetitionDto {
     private String location;
 
     private Double amount;
+
+    private List<RankingDto> rankings;
+
+    private List<HuntingDto> huntings;
 }

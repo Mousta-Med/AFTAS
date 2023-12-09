@@ -1,4 +1,4 @@
-package com.med.aftas.serverside.Config;
+package com.med.aftas.serverside.Util;
 
 import com.med.aftas.serverside.Exception.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;

@@ -1,6 +1,6 @@
 package com.med.aftas.serverside.Dto;
 
-import com.med.aftas.serverside.Util.RankingId;
+import com.med.aftas.serverside.Model.RankingId;
 import lombok.Data;
 
 @Data

@@ -1,4 +1,4 @@
-package com.springboot.youquiz.Config;
+package com.med.aftas.serverside.Config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

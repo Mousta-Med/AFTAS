@@ -4,6 +4,7 @@ import com.med.aftas.serverside.Enum.IdentityDocumentType;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class MemberDto {
@@ -19,4 +20,8 @@ public class MemberDto {
     private String nationality;
 
     private IdentityDocumentType identityDocument;
+
+    private List<RankingDto> rankings;
+
+    private List<HuntingDto> huntings;
 }

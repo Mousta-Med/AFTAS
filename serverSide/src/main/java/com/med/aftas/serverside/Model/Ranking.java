@@ -1,6 +1,5 @@
 package com.med.aftas.serverside.Model;
 
-import com.med.aftas.serverside.Util.RankingId;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;

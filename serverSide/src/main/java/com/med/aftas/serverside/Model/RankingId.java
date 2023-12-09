@@ -1,4 +1,4 @@
-package com.med.aftas.serverside.Util;
+package com.med.aftas.serverside.Model;
 
 import jakarta.persistence.Embeddable;
 

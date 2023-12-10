@@ -28,8 +28,8 @@ public class LevelServiceImpl implements LevelService {
     @Override
     public LevelDto save(LevelDto levelDto) {
         Level lastLevel = levelRepository.findLast();
-        if (lastLevel != null){
-            if (lastLevel.getPoints() > levelDto.getPoints()){
+        if (lastLevel != null) {
+            if (lastLevel.getPoints() > levelDto.getPoints()) {
                 throw new PointsValidationException("A level with a lower points cannot be inserted");
             }
         }

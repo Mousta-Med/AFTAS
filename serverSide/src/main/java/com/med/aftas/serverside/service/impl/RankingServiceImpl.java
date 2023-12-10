@@ -1,6 +1,7 @@
 package com.med.aftas.serverside.service.impl;
 
 import com.med.aftas.serverside.dto.RankingDto;
+import com.med.aftas.serverside.exception.CompetitionDateValidationException;
 import com.med.aftas.serverside.exception.ResourceNotFoundException;
 import com.med.aftas.serverside.model.Ranking;
 import com.med.aftas.serverside.model.RankingId;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +30,11 @@ public class RankingServiceImpl implements RankingService {
 
     @Override
     public RankingDto save(RankingDto rankingDto) {
+        LocalDateTime currentTime = LocalDateTime.now();
+        LocalDateTime registrationEndTime = rankingDto.getCompetition().getStartTime().minusHours(24);
+        if (currentTime.isAfter(registrationEndTime) && !currentTime.isAfter(rankingDto.getCompetition().getStartTime())) {
+            throw new CompetitionDateValidationException("Registration for competitions is allowed from the announcement until 24 hours before the start.");
+        }
         Ranking ranking = modelMapper.map(rankingDto, Ranking.class);
         return modelMapper.map(rankingRepository.save(ranking), RankingDto.class);
     }

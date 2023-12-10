@@ -1,5 +1,6 @@
 package com.med.aftas.serverside.util;
 
+import com.med.aftas.serverside.exception.CompetitionDateValidationException;
 import com.med.aftas.serverside.exception.PointsValidationException;
 import com.med.aftas.serverside.exception.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
@@ -47,6 +48,13 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handelException(IllegalStateException exception) {
         return ResponseEntity.badRequest().body(exception.getMessage());
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(CompetitionDateValidationException.class)
+    public ResponseEntity<?> handelCompetitionDateValidationException(CompetitionDateValidationException exception) {
+        return ResponseEntity.badRequest().body(exception.getMessage());
+    }
+
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<?> handelException() {

@@ -36,6 +36,7 @@ public class MemberController {
     public ResponseEntity<MemberRespDto> findOneMember(@PathVariable Integer num) {
         return ResponseEntity.ok(memberServiceImpl.findOne(num));
     }
+
     @GetMapping("/search/{query}")
     public ResponseEntity<List<MemberRespDto>> findMemberByNameOrFamilyName(@PathVariable String query) {
         return ResponseEntity.ok(memberServiceImpl.findByNameOrFamilyName(query));

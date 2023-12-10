@@ -62,4 +62,6 @@ public class CompetitionServiceImpl implements CompetitionService {
         Page<Competition> competitionsPage = competitionRepository.findAll(pageable);
         return competitionsPage.map(competition -> modelMapper.map(competition, CompetitionRespDto.class));
     }
+
+
 }

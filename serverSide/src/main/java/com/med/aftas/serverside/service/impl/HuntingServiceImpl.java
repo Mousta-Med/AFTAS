@@ -28,10 +28,10 @@ public class HuntingServiceImpl implements HuntingService {
     @Override
     public HuntingDto save(HuntingDto huntingDto) {
         Optional<Hunting> huntingOptional = huntingRepository.getHuntingByCompetitionCodeAndFishNameAndMemberNum(huntingDto.getCompetition().getCode(), huntingDto.getFish().getName(), huntingDto.getMember().getNum());
-        if (huntingOptional.isPresent()){
+        if (huntingOptional.isPresent()) {
             huntingOptional.get().setNumberOfFish(huntingOptional.get().getNumberOfFish() + huntingDto.getNumberOfFish());
             return modelMapper.map(huntingRepository.save(huntingOptional.get()), HuntingDto.class);
-        }else {
+        } else {
             Hunting hunting = modelMapper.map(huntingDto, Hunting.class);
             return modelMapper.map(huntingRepository.save(hunting), HuntingDto.class);
         }
@@ -68,9 +68,9 @@ public class HuntingServiceImpl implements HuntingService {
         return huntingsPage.map(hunting -> modelMapper.map(hunting, HuntingDto.class));
     }
 
-    public HuntingDto updateNumOfFish(Integer id, Integer addedValue){
+    public HuntingDto updateNumOfFish(Integer id, Integer addedValue) {
         Hunting existingHunting = huntingRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Hunting Not found with this: " + id));
-        existingHunting.setNumberOfFish(existingHunting.getNumberOfFish()+addedValue);
+        existingHunting.setNumberOfFish(existingHunting.getNumberOfFish() + addedValue);
         return modelMapper.map(huntingRepository.save(existingHunting), HuntingDto.class);
     }
 }

@@ -7,6 +7,7 @@ import com.med.aftas.serverside.model.Level;
 import com.med.aftas.serverside.repository.LevelRepository;
 import com.med.aftas.serverside.service.LevelService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -45,6 +46,8 @@ public class LevelServiceImpl implements LevelService {
     @Override
     public LevelDto update(Integer id, LevelDto levelDto) {
         Level existingLevel = levelRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Level Not found with this: " + id));
+        BeanUtils.copyProperties(levelDto, existingLevel);
+        existingLevel.setCode(id);
         return modelMapper.map(levelRepository.save(existingLevel), LevelDto.class);
     }
 

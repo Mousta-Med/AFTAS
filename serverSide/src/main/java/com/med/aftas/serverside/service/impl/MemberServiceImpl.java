@@ -7,6 +7,7 @@ import com.med.aftas.serverside.model.Member;
 import com.med.aftas.serverside.repository.MemberRepository;
 import com.med.aftas.serverside.service.MemberService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,6 +41,8 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public MemberRespDto update(Integer id, MemberDto memberDto) {
         Member existingMember = memberRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Member Not found with this: " + id));
+        BeanUtils.copyProperties(memberDto, existingMember);
+        existingMember.setNum(id);
         return modelMapper.map(memberRepository.save(existingMember), MemberRespDto.class);
     }
 

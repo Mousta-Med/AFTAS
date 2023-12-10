@@ -7,6 +7,7 @@ import com.med.aftas.serverside.model.RankingId;
 import com.med.aftas.serverside.repository.RankingRepository;
 import com.med.aftas.serverside.service.RankingService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,6 +41,8 @@ public class RankingServiceImpl implements RankingService {
     @Override
     public RankingDto update(RankingId id, RankingDto rankingDto) {
         Ranking existingRanking = rankingRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Ranking Not found with this: " + id));
+        BeanUtils.copyProperties(rankingDto, existingRanking);
+        existingRanking.setId(id);
         return modelMapper.map(rankingRepository.save(existingRanking), RankingDto.class);
     }
 

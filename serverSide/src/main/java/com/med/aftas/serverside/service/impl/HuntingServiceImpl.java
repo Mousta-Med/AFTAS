@@ -6,6 +6,7 @@ import com.med.aftas.serverside.model.Hunting;
 import com.med.aftas.serverside.repository.HuntingRepository;
 import com.med.aftas.serverside.service.HuntingService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -45,7 +46,8 @@ public class HuntingServiceImpl implements HuntingService {
     @Override
     public HuntingDto update(Integer id, HuntingDto huntingDto) {
         Hunting existingHunting = huntingRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Hunting Not found with this: " + id));
-        existingHunting.setNumberOfFish(huntingDto.getNumberOfFish());
+        BeanUtils.copyProperties(huntingDto, existingHunting);
+        existingHunting.setId(id);
         return modelMapper.map(huntingRepository.save(existingHunting), HuntingDto.class);
     }
 

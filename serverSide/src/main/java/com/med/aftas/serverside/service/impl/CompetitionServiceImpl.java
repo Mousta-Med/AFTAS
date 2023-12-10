@@ -7,6 +7,7 @@ import com.med.aftas.serverside.model.Competition;
 import com.med.aftas.serverside.repository.CompetitionRepository;
 import com.med.aftas.serverside.service.CompetitionService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,6 +41,8 @@ public class CompetitionServiceImpl implements CompetitionService {
     @Override
     public CompetitionRespDto update(String id, CompetitionDto competitionDto) {
         Competition existingCompetition = competitionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Competition Not found with this: " + id));
+        BeanUtils.copyProperties(competitionDto, existingCompetition);
+        existingCompetition.setCode(id);
         return modelMapper.map(competitionRepository.save(existingCompetition), CompetitionRespDto.class);
     }
 

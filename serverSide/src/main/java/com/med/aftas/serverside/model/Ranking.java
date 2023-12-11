@@ -1,9 +1,6 @@
 package com.med.aftas.serverside.model;
 
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,12 +21,14 @@ public class Ranking {
     private Integer score;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
+    @MapsId("memberNum")
+    @JoinColumn(name="member_num")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Member member;
 
     @ManyToOne
-    @JoinColumn(name = "competition_id")
+    @MapsId("competitionCode")
+    @JoinColumn(name="competition_code")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Competition competition;
 }

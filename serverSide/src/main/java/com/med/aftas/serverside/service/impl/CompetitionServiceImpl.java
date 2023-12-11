@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -64,4 +65,8 @@ public class CompetitionServiceImpl implements CompetitionService {
     }
 
 
+    @Override
+    public List<CompetitionRespDto> findCompetitionsWithDate(LocalDate date) {
+        return competitionRepository.findCompetitionByDate(date).stream().map(competition -> modelMapper.map(competition, CompetitionRespDto.class)).collect(Collectors.toList());
+    }
 }

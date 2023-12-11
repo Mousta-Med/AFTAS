@@ -5,6 +5,7 @@ import com.med.aftas.serverside.exception.CompetitionDateValidationException;
 import com.med.aftas.serverside.exception.ResourceNotFoundException;
 import com.med.aftas.serverside.model.Ranking;
 import com.med.aftas.serverside.model.RankingId;
+import com.med.aftas.serverside.repository.HuntingRepository;
 import com.med.aftas.serverside.repository.RankingRepository;
 import com.med.aftas.serverside.service.RankingService;
 import org.modelmapper.ModelMapper;
@@ -14,7 +15,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,14 +29,17 @@ public class RankingServiceImpl implements RankingService {
     private RankingRepository rankingRepository;
 
     @Autowired
+    private HuntingRepository huntingRepository;
+
+    @Autowired
     private ModelMapper modelMapper;
 
 
     @Override
     public RankingDto save(RankingDto rankingDto) {
-        LocalDateTime currentTime = LocalDateTime.now();
-        LocalDateTime registrationEndTime = rankingDto.getCompetition().getStartTime().minusHours(24);
-        if (currentTime.isAfter(registrationEndTime) && !currentTime.isAfter(rankingDto.getCompetition().getStartTime())) {
+        LocalDate currentDate = LocalDate.now();
+        LocalDate startDate = rankingDto.getCompetition().getDate();
+        if (ChronoUnit.DAYS.between(currentDate, startDate) < 1) {
             throw new CompetitionDateValidationException("Registration for competitions is allowed from the announcement until 24 hours before the start.");
         }
         Ranking ranking = modelMapper.map(rankingDto, Ranking.class);
@@ -68,5 +75,23 @@ public class RankingServiceImpl implements RankingService {
     public Page<RankingDto> findWithPagination(Pageable pageable) {
         Page<Ranking> rankingsPage = rankingRepository.findAll(pageable);
         return rankingsPage.map(ranking -> modelMapper.map(ranking, RankingDto.class));
+    }
+
+    @Override
+    public List<RankingDto> SetUpCompetitionRankings(String competitionCode) {
+        List<Ranking> rankings = rankingRepository.findByCompetitionCode(competitionCode);
+        if (rankings.isEmpty()) {
+            throw new ResourceNotFoundException("There is no Ranking in this competition");
+        }
+        rankings.forEach(ranking -> ranking.setScore(huntingRepository.getHuntingsByCompetitionCodeAndMemberNum(competitionCode, ranking.getMember().getNum())
+                .stream()
+                .mapToInt(hunt -> hunt.getNumberOfFish() * hunt.getFish().getLevel().getPoints())
+                .sum()));
+        rankings.sort(Comparator.comparingInt(Ranking::getScore).reversed());
+        int rank = 1;
+        for (Ranking ranking : rankings)
+            ranking.setRank(rank++);
+        return Arrays.asList(modelMapper.map(rankingRepository.saveAll(rankings), RankingDto[].class)
+        );
     }
 }

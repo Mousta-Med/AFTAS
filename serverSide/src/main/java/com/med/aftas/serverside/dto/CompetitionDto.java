@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Data
 @AllArgsConstructor
@@ -23,11 +23,11 @@ public class CompetitionDto {
 
     @FutureOrPresent(message = "Start Time Should Be Present or future")
     @NotNull(message = "Start Time Should Not Be Null")
-    private LocalDateTime startTime;
+    private LocalTime startTime;
 
     @FutureOrPresent(message = "End Time Should Be Present or future")
     @NotNull(message = "End Time Should Not Be Null")
-    private LocalDateTime endTime;
+    private LocalTime endTime;
 
     @Positive(message = "number Of Participants should be a positive value")
     private Integer numberOfParticipants;

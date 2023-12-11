@@ -9,7 +9,5 @@ import java.util.List;
 
 @Repository
 public interface RankingRepository extends JpaRepository<Ranking, RankingId> {
-    List<Ranking> findByIdNum(Integer num);
-
-    List<Ranking> findByIdCode(String code);
+    List<Ranking> findByCompetitionCode(String code);
 }

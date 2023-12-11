@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -30,6 +31,11 @@ public class CompetitionController {
     ) {
         PageRequest pageable = PageRequest.of(page, size);
         return ResponseEntity.ok(competitionServiceImpl.findWithPagination(pageable).getContent());
+    }
+
+    @GetMapping("/date")
+    public ResponseEntity<List<CompetitionRespDto>> getCompetitionsByDate(@RequestParam(name = "date") LocalDate date) {
+        return ResponseEntity.ok(competitionServiceImpl.findCompetitionsWithDate(date));
     }
 
     @GetMapping("/{code}")

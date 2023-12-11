@@ -68,9 +68,9 @@ public class HuntingServiceImpl implements HuntingService {
         return huntingsPage.map(hunting -> modelMapper.map(hunting, HuntingDto.class));
     }
 
-    public HuntingDto updateNumOfFish(Integer id, Integer addedValue) {
-        Hunting existingHunting = huntingRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Hunting Not found with this: " + id));
-        existingHunting.setNumberOfFish(existingHunting.getNumberOfFish() + addedValue);
-        return modelMapper.map(huntingRepository.save(existingHunting), HuntingDto.class);
+
+    @Override
+    public List<HuntingDto> getHuntingsByCompetitionCodeAndMemberNum(String code, Integer num) {
+        return huntingRepository.getHuntingsByCompetitionCodeAndMemberNum(code, num).stream().map(hunting -> modelMapper.map(hunting, HuntingDto.class)).collect(Collectors.toList());
     }
 }

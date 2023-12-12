@@ -24,8 +24,8 @@ public class RankingDto {
     private Integer score;
 
     @NotNull(message = "member should not be null")
-    private MemberDto member;
+    private Integer memberNum;
 
     @NotNull(message = "competition should not be null")
-    private CompetitionDto competition;
+    private String competitionCode;
 }

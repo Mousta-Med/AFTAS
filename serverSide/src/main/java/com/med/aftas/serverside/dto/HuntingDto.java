@@ -1,6 +1,8 @@
 package com.med.aftas.serverside.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,12 +18,13 @@ public class HuntingDto {
     @PositiveOrZero(message = "number Of Fish should not be negative")
     private Integer numberOfFish;
 
-    @NotNull(message = "fish should not be null")
-    private FishDto fish;
+    @NotBlank(message = "fish name should not be blank")
+    private String fishName;
 
-    @NotNull(message = "member should not be null")
-    private MemberDto member;
+    @NotNull(message = "member num should not be null")
+    @Positive(message = "member num should not be 0 or negative")
+    private Integer memberNum;
 
-    @NotNull(message = "competition should not be null")
-    private CompetitionDto competition;
+    @NotBlank(message = "competition code should not be blank")
+    private String competitionCode;
 }

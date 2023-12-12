@@ -8,9 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface LevelRepository extends JpaRepository<Level, Integer> {
-    Optional<Level> findTopByOrderByCodeDesc();
-
-    default Level findLast() {
-        return findTopByOrderByCodeDesc().orElse(null);
-    }
+    Optional<Level> findTopByCodeLessThanOrderByCodeDesc(Integer code);
+    Optional<Level> findTopByCodeGreaterThanOrderByCodeDesc(Integer code);
 }

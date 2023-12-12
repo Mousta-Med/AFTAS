@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,10 +28,21 @@ public class LevelServiceImpl implements LevelService {
 
     @Override
     public LevelDto save(LevelDto levelDto) {
-        Level lastLevel = levelRepository.findLast();
-        if (lastLevel != null) {
-            if (lastLevel.getPoints() > levelDto.getPoints()) {
+        Optional<Level> before = levelRepository.findTopByCodeLessThanOrderByCodeDesc(levelDto.getCode());
+        Optional<Level> after = levelRepository.findTopByCodeGreaterThanOrderByCodeDesc(levelDto.getCode());
+        Optional<Level> levelOptional = levelRepository.findById(levelDto.getCode());
+        if (levelOptional.isPresent()){
+            throw new ResourceNotFoundException("Level Already Exist");
+        }else if (before.isPresent()){
+            Level lastLevel = before.get();
+            if (lastLevel.getPoints() >= levelDto.getPoints()) {
                 throw new PointsValidationException("A level with a lower points cannot be inserted");
+            }
+        }
+        if (after.isPresent()){
+            Level firstLevel = after.get();
+            if (firstLevel.getPoints() <= levelDto.getPoints()) {
+                throw new PointsValidationException("A level with a Higher points cannot be inserted");
             }
         }
         Level level = modelMapper.map(levelDto, Level.class);

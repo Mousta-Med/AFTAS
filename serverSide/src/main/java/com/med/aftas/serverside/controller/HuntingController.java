@@ -1,6 +1,7 @@
 package com.med.aftas.serverside.controller;
 
 import com.med.aftas.serverside.dto.HuntingDto;
+import com.med.aftas.serverside.dto.respDto.HuntingRespDto;
 import com.med.aftas.serverside.service.impl.HuntingServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,12 @@ public class HuntingController {
     private HuntingServiceImpl huntingServiceImpl;
 
     @GetMapping
-    public ResponseEntity<List<HuntingDto>> findAllHuntings() {
+    public ResponseEntity<List<HuntingRespDto>> findAllHuntings() {
         return ResponseEntity.ok(huntingServiceImpl.findAll());
     }
 
     @GetMapping("/paginated")
-    public ResponseEntity<List<HuntingDto>> getPaginatedHuntings(
+    public ResponseEntity<List<HuntingRespDto>> getPaginatedHuntings(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size
     ) {
@@ -32,17 +33,17 @@ public class HuntingController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<HuntingDto> findOneHunting(@PathVariable Integer id) {
+    public ResponseEntity<HuntingRespDto> findOneHunting(@PathVariable Integer id) {
         return ResponseEntity.ok(huntingServiceImpl.findOne(id));
     }
 
     @PostMapping
-    public ResponseEntity<HuntingDto> saveHunting(@RequestBody @Valid HuntingDto huntingDto) {
+    public ResponseEntity<HuntingRespDto> saveHunting(@RequestBody @Valid HuntingDto huntingDto) {
         return ResponseEntity.ok(huntingServiceImpl.save(huntingDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<HuntingDto> updateHunting(@PathVariable Integer id, @RequestBody @Valid HuntingDto huntingDto) {
+    public ResponseEntity<HuntingRespDto> updateHunting(@PathVariable Integer id, @RequestBody @Valid HuntingDto huntingDto) {
         return ResponseEntity.ok(huntingServiceImpl.update(id, huntingDto));
     }
 

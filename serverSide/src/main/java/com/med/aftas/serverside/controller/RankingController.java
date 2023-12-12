@@ -1,6 +1,7 @@
 package com.med.aftas.serverside.controller;
 
 import com.med.aftas.serverside.dto.RankingDto;
+import com.med.aftas.serverside.dto.respDto.RankingRespDto;
 import com.med.aftas.serverside.model.RankingId;
 import com.med.aftas.serverside.service.impl.RankingServiceImpl;
 import jakarta.validation.Valid;
@@ -19,12 +20,12 @@ public class RankingController {
     private RankingServiceImpl rankingServiceImpl;
 
     @GetMapping
-    public ResponseEntity<List<RankingDto>> findAllRankings() {
+    public ResponseEntity<List<RankingRespDto>> findAllRankings() {
         return ResponseEntity.ok(rankingServiceImpl.findAll());
     }
 
     @GetMapping("/paginated")
-    public ResponseEntity<List<RankingDto>> getPaginatedRankings(
+    public ResponseEntity<List<RankingRespDto>> getPaginatedRankings(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size
     ) {
@@ -32,23 +33,26 @@ public class RankingController {
         return ResponseEntity.ok(rankingServiceImpl.findWithPagination(pageable).getContent());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<RankingDto> findOneRanking(@PathVariable RankingId id) {
+    @GetMapping("/{competitionCode}/{memberNum}")
+    public ResponseEntity<RankingRespDto> findOneRanking(@PathVariable String competitionCode, @PathVariable Integer memberNum) {
+        RankingId id = new RankingId(memberNum, competitionCode);
         return ResponseEntity.ok(rankingServiceImpl.findOne(id));
     }
 
     @PostMapping
-    public ResponseEntity<RankingDto> saveRanking(@RequestBody @Valid RankingDto rankingDto) {
+    public ResponseEntity<RankingRespDto> saveRanking(@RequestBody @Valid RankingDto rankingDto) {
         return ResponseEntity.ok(rankingServiceImpl.save(rankingDto));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<RankingDto> updateRanking(@PathVariable RankingId id, @RequestBody @Valid RankingDto rankingDto) {
+    @PutMapping("/{competitionCode}/{memberNum}")
+    public ResponseEntity<RankingRespDto> updateRanking(@PathVariable String competitionCode, @PathVariable Integer memberNum, @RequestBody @Valid RankingDto rankingDto) {
+        RankingId id = new RankingId(memberNum, competitionCode);
         return ResponseEntity.ok(rankingServiceImpl.update(id, rankingDto));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteRanking(@PathVariable(name = "id") RankingId id) {
+    @DeleteMapping("/{competitionCode}/{memberNum}")
+    public ResponseEntity<Void> deleteRanking(@PathVariable String competitionCode, @PathVariable Integer memberNum) {
+        RankingId id = new RankingId(memberNum, competitionCode);
         rankingServiceImpl.delete(id);
         return ResponseEntity.noContent().build();
     }

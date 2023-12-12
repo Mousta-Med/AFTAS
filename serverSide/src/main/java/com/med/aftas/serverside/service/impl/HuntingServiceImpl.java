@@ -1,9 +1,16 @@
 package com.med.aftas.serverside.service.impl;
 
 import com.med.aftas.serverside.dto.HuntingDto;
+import com.med.aftas.serverside.dto.respDto.HuntingRespDto;
 import com.med.aftas.serverside.exception.ResourceNotFoundException;
+import com.med.aftas.serverside.model.Competition;
+import com.med.aftas.serverside.model.Fish;
 import com.med.aftas.serverside.model.Hunting;
+import com.med.aftas.serverside.model.Member;
+import com.med.aftas.serverside.repository.CompetitionRepository;
+import com.med.aftas.serverside.repository.FishRepository;
 import com.med.aftas.serverside.repository.HuntingRepository;
+import com.med.aftas.serverside.repository.MemberRepository;
 import com.med.aftas.serverside.service.HuntingService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
@@ -18,6 +25,16 @@ import java.util.stream.Collectors;
 
 @Service
 public class HuntingServiceImpl implements HuntingService {
+
+    @Autowired
+    private CompetitionRepository competitionRepository;
+
+    @Autowired
+    private MemberRepository memberRepository;
+
+    @Autowired
+    private FishRepository fishRepository;
+
     @Autowired
     private HuntingRepository huntingRepository;
 
@@ -26,15 +43,25 @@ public class HuntingServiceImpl implements HuntingService {
 
 
     @Override
-    public HuntingDto save(HuntingDto huntingDto) {
-        Optional<Hunting> huntingOptional = huntingRepository.getHuntingByCompetitionCodeAndFishNameAndMemberNum(huntingDto.getCompetition().getCode(), huntingDto.getFish().getName(), huntingDto.getMember().getNum());
+    public HuntingRespDto save(HuntingDto huntingDto) {
+        Competition competition = competitionRepository.findById(huntingDto.getCompetitionCode()).orElseThrow(() -> new ResourceNotFoundException("Competition Not found"));
+        Member member = memberRepository.findById(huntingDto.getMemberNum()).orElseThrow(() -> new ResourceNotFoundException("Member Not found"));
+        Fish fish = fishRepository.findById(huntingDto.getFishName()).orElseThrow(() -> new ResourceNotFoundException("Fish Not found"));
+        Optional<Hunting> huntingOptional = huntingRepository.getHuntingByCompetitionCodeAndFishNameAndMemberNum(huntingDto.getCompetitionCode(), huntingDto.getFishName(), huntingDto.getMemberNum());
+        Hunting hunting;
         if (huntingOptional.isPresent()) {
-            huntingOptional.get().setNumberOfFish(huntingOptional.get().getNumberOfFish() + huntingDto.getNumberOfFish());
-            return modelMapper.map(huntingRepository.save(huntingOptional.get()), HuntingDto.class);
+            hunting = huntingOptional.get();
+            hunting.setCompetition(competition);
+            hunting.setMember(member);
+            hunting.setFish(fish);
+            hunting.setNumberOfFish(hunting.getNumberOfFish() + huntingDto.getNumberOfFish());
         } else {
-            Hunting hunting = modelMapper.map(huntingDto, Hunting.class);
-            return modelMapper.map(huntingRepository.save(hunting), HuntingDto.class);
+            hunting = modelMapper.map(huntingDto, Hunting.class);
+            hunting.setCompetition(competition);
+            hunting.setMember(member);
+            hunting.setFish(fish);
         }
+        return modelMapper.map(huntingRepository.save(hunting), HuntingRespDto.class);
     }
 
     @Override
@@ -44,33 +71,39 @@ public class HuntingServiceImpl implements HuntingService {
     }
 
     @Override
-    public HuntingDto update(Integer id, HuntingDto huntingDto) {
+    public HuntingRespDto update(Integer id, HuntingDto huntingDto) {
+        Competition competition = competitionRepository.findById(huntingDto.getCompetitionCode()).orElseThrow(() -> new ResourceNotFoundException("Competition Not found"));
+        Member member = memberRepository.findById(huntingDto.getMemberNum()).orElseThrow(() -> new ResourceNotFoundException("Member Not found"));
+        Fish fish = fishRepository.findById(huntingDto.getFishName()).orElseThrow(() -> new ResourceNotFoundException("Fish Not found"));
         Hunting existingHunting = huntingRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Hunting Not found with this: " + id));
         BeanUtils.copyProperties(huntingDto, existingHunting);
         existingHunting.setId(id);
-        return modelMapper.map(huntingRepository.save(existingHunting), HuntingDto.class);
+        existingHunting.setCompetition(competition);
+        existingHunting.setMember(member);
+        existingHunting.setFish(fish);
+        return modelMapper.map(huntingRepository.save(existingHunting), HuntingRespDto.class);
     }
 
     @Override
-    public HuntingDto findOne(Integer id) {
+    public HuntingRespDto findOne(Integer id) {
         return huntingRepository.findById(id)
-                .map(hunting -> modelMapper.map(hunting, HuntingDto.class)).orElseThrow(() -> new ResourceNotFoundException("Hunting Not found with this: " + id));
+                .map(hunting -> modelMapper.map(hunting, HuntingRespDto.class)).orElseThrow(() -> new ResourceNotFoundException("Hunting Not found with this: " + id));
     }
 
     @Override
-    public List<HuntingDto> findAll() {
-        return huntingRepository.findAll().stream().map(hunting -> modelMapper.map(hunting, HuntingDto.class)).collect(Collectors.toList());
+    public List<HuntingRespDto> findAll() {
+        return huntingRepository.findAll().stream().map(hunting -> modelMapper.map(hunting, HuntingRespDto.class)).collect(Collectors.toList());
     }
 
     @Override
-    public Page<HuntingDto> findWithPagination(Pageable pageable) {
+    public Page<HuntingRespDto> findWithPagination(Pageable pageable) {
         Page<Hunting> huntingsPage = huntingRepository.findAll(pageable);
-        return huntingsPage.map(hunting -> modelMapper.map(hunting, HuntingDto.class));
+        return huntingsPage.map(hunting -> modelMapper.map(hunting, HuntingRespDto.class));
     }
 
 
     @Override
-    public List<HuntingDto> getHuntingsByCompetitionCodeAndMemberNum(String code, Integer num) {
-        return huntingRepository.getHuntingsByCompetitionCodeAndMemberNum(code, num).stream().map(hunting -> modelMapper.map(hunting, HuntingDto.class)).collect(Collectors.toList());
+    public List<HuntingRespDto> getHuntingsByCompetitionCodeAndMemberNum(String code, Integer num) {
+        return huntingRepository.getHuntingsByCompetitionCodeAndMemberNum(code, num).stream().map(hunting -> modelMapper.map(hunting, HuntingRespDto.class)).collect(Collectors.toList());
     }
 }

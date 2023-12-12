@@ -9,7 +9,6 @@ import java.util.List;
 
 @Repository
 public interface RankingRepository extends JpaRepository<Ranking, RankingId> {
-    List<Ranking> findByCompetitionCode(String code);
-    List<Ranking> findByMemberNum(Integer num);
+    List<Ranking> findRankingsByCompetitionCode(String code);
 
 }

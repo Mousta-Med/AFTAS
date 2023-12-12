@@ -15,8 +15,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RankingRespDto {
 
-    private RankingId id;
-
     private Integer rank;
 
     private Integer score;

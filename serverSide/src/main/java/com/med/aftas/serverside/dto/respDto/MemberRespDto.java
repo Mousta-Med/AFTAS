@@ -27,6 +27,8 @@ public class MemberRespDto {
 
     private IdentityDocumentType identityDocument;
 
+    private String identityNumber;
+
     private List<RankingDto> rankings;
 
     private List<HuntingDto> huntings;

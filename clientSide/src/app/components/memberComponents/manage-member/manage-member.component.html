@@ -1,0 +1,53 @@
+<div class=" p-dialog-content">
+  <div class="flex flex-column gap-3 mt-3 ">
+    <div>
+      <label class="block mb-1 text-color text-base" for="cardholder">Cardholder Name</label>
+      <span class="p-input-icon-left w-full">
+      <i class="pi pi-user"></i>
+      <input class="p-inputtext p-component p-element w-full" id="cardholder" name="cardholder" type="text">
+      </span>
+    </div>
+    <div>
+      <label class="block mb-1 text-color text-base" for="credit-card">Credit Card Number</label>
+      <span class="p-input-icon-left w-full">
+        <i class="pi pi-credit-card"></i>
+        <input class="p-inputtext p-component p-element w-full" id="credit-card" name="cc"
+               placeholder="1234-1234-1234-1234" type="text">
+      </span>
+    </div>
+    <div class="flex gap-3">
+      <div class="w-full">
+        <label class="block mb-1 text-color text-base" for="cvc">CVC</label>
+        <span
+          class="p-input-icon-left w-full">
+          <i class="pi pi-lock"></i>
+          <input class="p-inputtext p-component p-element w-full" id="cvc" name="cvc"
+                 placeholder="123" type="text">
+        </span>
+      </div>
+      <div class="w-full">
+        <label class="block mb-1 text-color text-base" for="expiration">Expiration</label>
+        <span
+          class="p-input-icon-left w-full">
+        <i class="pi pi-clock"></i>
+        <input class="p-inputtext p-component p-element w-full" id="expiration"
+               name="exp" placeholder="12/22" type="text">
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="p-dialog-footer">
+  <div class="flex gap-3 justify-content-end border-top-1 surface-border pt-5">
+    <button class="p-element p-ripple p-button-text p-button p-component">
+      <span
+        class="p-button-label">Cancel
+      </span>
+    </button>
+    <button class="p-element p-ripple p-button-rounded p-button p-component">
+      <span
+        class="p-button-label">Update
+      </span>
+    </button>
+  </div>
+</div>

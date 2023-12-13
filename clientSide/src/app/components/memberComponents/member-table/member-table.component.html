@@ -1,0 +1,27 @@
+<p-table [value]="members" [tableStyle]="{ 'min-width': '50rem' }">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Name</th>
+      <th>Family Name</th>
+      <th>Nationality</th>
+      <th>Identity Type</th>
+      <th>Identity Code</th>
+      <th>Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-member>
+    <tr>
+      <td>{{ member.name }}</td>
+      <td>{{ member.familyName }}</td>
+      <td>{{ member.nationality }}</td>
+      <td>{{ member.identityDocument }}</td>
+      <td>{{ member.identityNumber }}</td>
+      <td>
+        <button pButton pRipple type="button" icon="pi pi-pencil"
+                class="p-button-rounded p-button-text"></button>
+        <button pButton pRipple type="button" icon="pi pi-trash"
+                class="p-button-rounded p-button-danger p-button-text"></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

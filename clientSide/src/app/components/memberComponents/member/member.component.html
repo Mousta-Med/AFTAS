@@ -1,0 +1,38 @@
+<p-dialog [(visible)]="visible" [dismissableMask]="true" [draggable]="false" [modal]="true" [resizable]="false"
+          [style]="{ width: '50vw' }" header="Header">
+  <app-manage-member
+    (cancel)="cancel()"
+    (submit)="save($event)"
+    [member]="member"
+    [operation]="operation"
+  ></app-manage-member>
+</p-dialog>
+<p-toast></p-toast>
+<p-confirmDialog [style]="{width: '45vw'}"
+                 acceptButtonStyleClass="p-button-danger"
+                 acceptIcon="pi pi-trash"
+                 acceptLabel="Delete"
+                 rejectLabel="Cancel"></p-confirmDialog>
+<div
+  class="px-5 surface-0 border-bottom-1 surface-border relative static"
+  style="height: 60px;">
+  <div class="flex justify-content-between align-items-center">
+    <div>
+      <p-button (click)="createMember()" icon="pi pi-plus" label="Add Member" size="small"
+                styleClass="p-button-success"></p-button>
+    </div>
+    <div class="p-input-icon-left border-2 border-round border-gray-300">
+      <i class="pi pi-search"></i>
+      <input
+        class="p-inputtext p-component p-element border-none w-full"
+        placeholder="Search"
+        type="text">
+    </div>
+  </div>
+</div>
+<div class="m-5">
+  <app-member-table
+    [members]="members"
+  ></app-member-table>
+</div>
+

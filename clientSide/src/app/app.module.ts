@@ -1,26 +1,37 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
-import { HomeComponent } from './components/homeComponents/home/home.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {PagenotfoundComponent} from './components/pagenotfound/pagenotfound.component';
+import {HomeComponent} from './components/homeComponents/home/home.component';
 import {MenuModule} from "primeng/menu";
-import { DashboardComponent } from './components/homeComponents/dashboard/dashboard.component';
+import {DashboardComponent} from './components/homeComponents/dashboard/dashboard.component';
+import {MenuBarComponent} from './components/homeComponents/menu-bar/menu-bar.component';
+import {MenuItemComponent} from './components/homeComponents/menu-item/menu-item.component';
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {MemberComponent} from './components/memberComponents/member/member.component';
+import {CompetitionComponent} from './components/competionComponents/competition/competition.component';
+import {MenubarModule} from "primeng/menubar";
+import {InputTextModule} from "primeng/inputtext";
+import {RippleModule} from "primeng/ripple";
+import {ButtonModule} from "primeng/button";
+import {TableModule} from "primeng/table";
+import {HttpClientModule} from "@angular/common/http";
+import { MemberTableComponent } from './components/memberComponents/member-table/member-table.component';
+import { ManageMemberComponent } from './components/memberComponents/manage-member/manage-member.component';
+import {SidebarModule} from "primeng/sidebar";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {DialogModule} from "primeng/dialog";
+import {ToastModule} from "primeng/toast";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {ConfirmationService, MessageService} from "primeng/api";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    PagenotfoundComponent,
-    HomeComponent,
-    DashboardComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    MenuModule
-  ],
-  providers: [],
+  declarations: [AppComponent, PagenotfoundComponent, HomeComponent, DashboardComponent, MenuBarComponent, MenuItemComponent, MemberComponent, CompetitionComponent, MemberTableComponent, ManageMemberComponent],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, BrowserAnimationsModule, MenuModule, FontAwesomeModule, MenubarModule, InputTextModule, RippleModule, ButtonModule, TableModule, SidebarModule, DialogModule, ToastModule, ConfirmDialogModule],
+  providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

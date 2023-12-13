@@ -1,0 +1,29 @@
+<div
+  class="surface-section h-full hidden lg:block flex-shrink-0 absolute lg:static left-0 top-0 z-1 border-right-1 surface-border select-none"
+  style="width: 280px">
+  <div class="flex flex-column h-full">
+    <div class="flex align-items-center px-5 flex-shrink-0" style="height: 60px;">
+      <h3 class="ml-2">AFTAS</h3>
+    </div>
+    <div class="overflow-y-auto">
+      <ul class="list-none p-3 m-0">
+        <li>
+          <ul class="list-none p-0 m-0 overflow-hidden">
+            <app-menu-item *ngFor="let item of menu"
+                           [menuItem]=item
+            ></app-menu-item>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="mt-auto">
+      <hr class="mb-3 mx-3 border-top-1 border-none surface-border">
+      <div class="p-ripple p-element m-3 flex align-items-center p-3 border-round text-700 surface-100">
+        <img class="mr-2"
+             src="https://maghreb.simplonline.co/_next/image?url=https%3A%2F%2Fsimplonline-v3-prod.s3.eu-west-3.amazonaws.com%2Fmedia%2Fimage%2Fjpg%2Fchasse-sous-marine-sous-eau-950002-169315-657215df5fd58614044589.jpg&w=1280&q=75"
+             style="width: 40px; height: 40px;"><span
+        class="font-medium">AFTAS</span><span class="p-ink"></span>
+      </div>
+    </div>
+  </div>
+</div>

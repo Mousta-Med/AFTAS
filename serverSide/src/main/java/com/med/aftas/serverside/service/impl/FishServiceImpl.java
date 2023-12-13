@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,6 +28,10 @@ public class FishServiceImpl implements FishService {
 
     @Override
     public FishRespDto save(FishDto fishDto) {
+        Optional<Fish> fishOptional = fishRepository.findById(fishDto.getName());
+        if (fishOptional.isPresent()){
+            throw new ResourceNotFoundException("Fish already exist");
+        }
         Fish fish = modelMapper.map(fishDto, Fish.class);
         return modelMapper.map(fishRepository.save(fish), FishRespDto.class);
     }

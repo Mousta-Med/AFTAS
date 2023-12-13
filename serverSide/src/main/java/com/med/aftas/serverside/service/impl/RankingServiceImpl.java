@@ -25,6 +25,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,6 +49,11 @@ public class RankingServiceImpl implements RankingService {
 
     @Override
     public RankingRespDto save(RankingDto rankingDto) {
+        RankingId rankingId = new RankingId(rankingDto.getMemberNum(), rankingDto.getCompetitionCode());
+        Optional<Ranking> rankingOptional = rankingRepository.findById(rankingId);
+        if (rankingOptional.isPresent()){
+            throw new ResourceNotFoundException("Ranking already exist");
+        }
         Competition competition = competitionRepository.findById(rankingDto.getCompetitionCode()).orElseThrow(() -> new ResourceNotFoundException("Competition Not found"));
         Member member = memberRepository.findById(rankingDto.getMemberNum()).orElseThrow(() -> new ResourceNotFoundException("Member Not found"));
         List<Ranking> rankings = rankingRepository.findRankingsByCompetitionCode(competition.getCode());
@@ -59,7 +65,6 @@ public class RankingServiceImpl implements RankingService {
             throw new CompetitionDateValidationException("You Reach The Max Of Members In Competition");
         }
         Ranking ranking = modelMapper.map(rankingDto, Ranking.class);
-        RankingId rankingId = new RankingId(rankingDto.getMemberNum(), rankingDto.getCompetitionCode());
         ranking.setId(rankingId);
         ranking.setCompetition(competition);
         ranking.setMember(member);

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,6 +30,10 @@ public class CompetitionServiceImpl implements CompetitionService {
 
     @Override
     public CompetitionRespDto save(CompetitionDto competitionDto) {
+        Optional<Competition> competitionOptional = competitionRepository.findById(competitionDto.getCode());
+        if (competitionOptional.isPresent()){
+            throw new ResourceNotFoundException("Competition already exist");
+        }
         Competition competition = modelMapper.map(competitionDto, Competition.class);
         return modelMapper.map(competitionRepository.save(competition), CompetitionRespDto.class);
     }

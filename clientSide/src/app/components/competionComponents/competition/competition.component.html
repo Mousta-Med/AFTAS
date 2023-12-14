@@ -1,18 +1,40 @@
-<div>
-  <div
-    class="px-5 surface-0 border-bottom-1 surface-border relative static"
-    style="height: 60px;">
-    <div class="flex justify-content-between align-items-center">
-      <div>
-        <p-button icon="pi pi-plus" label="Add Competition" size="small" styleClass="p-button-success"></p-button>
-      </div>
-      <div class="p-input-icon-left border-2 border-round border-gray-300">
-        <i class="pi pi-search"></i>
-        <input
-          class="p-inputtext p-component p-element border-none w-full"
-          placeholder="Search"
-          type="text">
+<p-dialog [(visible)]="visible" [dismissableMask]="true" [draggable]="false" [modal]="true" [resizable]="false"
+          [style]="{ width: '50vw' }" header="{{title}}">
+  <app-manage-competition
+    (cancel)="cancel()"
+    (submit)="save($event)"
+    [competition]="competition"
+  ></app-manage-competition>
+</p-dialog>
+<p-toast></p-toast>
+<p-confirmDialog [dismissableMask]="true"
+                 [style]="{width: '45vw'}"
+                 acceptButtonStyleClass="p-button-danger"
+                 acceptIcon="pi pi-trash"
+                 acceptLabel="Delete"
+                 rejectLabel="Cancel"></p-confirmDialog>
+<div
+  class="px-5 surface-0 border-bottom-1 surface-border relative static"
+  style="height: 60px;">
+  <div class="flex justify-content-between align-items-center">
+    <div>
+      <p-button (click)="createCompetition()" icon="pi pi-plus" label="Add Competition" size="small"
+                styleClass="p-button-success"></p-button>
+    </div>
+  </div>
+</div>
+<div class="block-content">
+  <div class="p-5 surface-ground">
+    <div class="surface-ground">
+      <div class="grid">
+        <app-competition-card
+          (delete)="deleteCompetition($event)"
+          (update)="updateCompetition($event)"
+          *ngFor="let competition of competitions"
+          [competition]="competition"
+        ></app-competition-card>
       </div>
     </div>
   </div>
 </div>
+

@@ -21,11 +21,9 @@ public class CompetitionDto {
     @NotNull(message = "Date Should Not Be Null")
     private LocalDate date;
 
-    @FutureOrPresent(message = "Start Time Should Be Present or future")
     @NotNull(message = "Start Time Should Not Be Null")
     private LocalTime startTime;
 
-    @FutureOrPresent(message = "End Time Should Be Present or future")
     @NotNull(message = "End Time Should Not Be Null")
     private LocalTime endTime;
 

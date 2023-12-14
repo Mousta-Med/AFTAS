@@ -56,12 +56,12 @@ public class RankingServiceImpl implements RankingService {
         }
         Competition competition = competitionRepository.findById(rankingDto.getCompetitionCode()).orElseThrow(() -> new ResourceNotFoundException("Competition Not found"));
         Member member = memberRepository.findById(rankingDto.getMemberNum()).orElseThrow(() -> new ResourceNotFoundException("Member Not found"));
-        List<Ranking> rankings = rankingRepository.findRankingsByCompetitionCode(competition.getCode());
+//        List<Ranking> rankings = rankingRepository.findRankingsByCompetitionCode(competition.getCode());
         LocalDate currentDate = LocalDate.now();
         LocalDate startDate = competition.getDate();
         if (ChronoUnit.DAYS.between(currentDate, startDate) < 1) {
             throw new CompetitionDateValidationException("Registration for competitions is allowed from the announcement until 24 hours before the start.");
-        }else if(rankings.size() == competition.getNumberOfParticipants() ){
+        }else if(competition.getRankings().size() == competition.getNumberOfParticipants() ){
             throw new CompetitionDateValidationException("You Reach The Max Of Members In Competition");
         }
         Ranking ranking = modelMapper.map(rankingDto, Ranking.class);

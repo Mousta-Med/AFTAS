@@ -9,7 +9,6 @@
                min="{{date | date:'yyyy-MM-dd'}}" placeholder="" type="date">
         </span>
         <div *ngIf="competitionForm.controls?.['date']?.touched">
-          {{competitionForm.controls?.['date']?.errors | json}}
           <small *ngIf="competitionForm.controls?.['date']?.errors?.['required']" class="text-red-300">Date is required.</small>
         </div>
       </div>
@@ -61,7 +60,6 @@
         <input class="p-inputtext p-component p-element w-full" formControlName="location" id="location"
                placeholder="Enter Competition Location" type="text">
         </span>
-          <small *ngIf="competitionForm.controls?.['location']?.invalid && competitionForm.controls?.['location']?.touched" class="text-red-300">Date is required.</small>
       </div>
     </div>
   </div>

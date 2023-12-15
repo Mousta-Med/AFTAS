@@ -44,7 +44,7 @@ export class CompetitionComponent implements OnInit {
           .subscribe({
             next: () => {
               this.findAllCompetitions();
-              this.messageService.add({severity: 'success', summary: 'Success', detail: 'Level Created Successfully'});
+              this.messageService.add({severity: 'success', summary: 'Success', detail: 'Competition Created Successfully'});
               this.competition = {
                 code: '',
                 location: '',
@@ -61,7 +61,7 @@ export class CompetitionComponent implements OnInit {
           .subscribe({
             next: () => {
               this.findAllCompetitions();
-              this.messageService.add({severity: 'success', summary: 'Success', detail: 'Level Updated Successfully'});
+              this.messageService.add({severity: 'success', summary: 'Success', detail: 'Competition Updated Successfully'});
             }
           });
       }

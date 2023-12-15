@@ -24,13 +24,13 @@ export class ManageMemberComponent implements OnChanges{
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.operation === 'update') {
-      this.title = 'Update Level';
+      this.title = 'Update Member';
     } else {
-      this.title = 'New Level';
+      this.title = 'New Member';
     }
   }
 
-  get isLevelValid(): boolean {
+  get ismemberValid(): boolean {
     return this.hasLength(this.member.name)
   }
 

@@ -105,6 +105,10 @@ public class RankingServiceImpl implements RankingService {
         Page<Ranking> rankingsPage = rankingRepository.findAll(pageable);
         return rankingsPage.map(ranking -> modelMapper.map(ranking, RankingRespDto.class));
     }
+    @Override
+    public List<RankingRespDto> findWithCompetitionCode(String code) {
+        return rankingRepository.findRankingsByCompetitionCodeOrderByScoreDesc(code).stream().map(ranking -> modelMapper.map(ranking, RankingRespDto.class)).collect(Collectors.toList());
+    }
 
     @Override
     public List<RankingRespDto> SetUpCompetitionRankings(String competitionCode) {

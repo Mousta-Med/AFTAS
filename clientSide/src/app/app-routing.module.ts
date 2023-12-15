@@ -25,7 +25,7 @@ const routes: Routes = [
         component: MemberComponent
       },
       {
-        path:"competition",
+        path:"competition/:code",
         component: CompetitionInfoComponent
       }
     ]

@@ -48,7 +48,7 @@ export class ManageCompetitionComponent implements OnInit, OnChanges {
   ngOnInit(): void {
   }
 
-  isLevelValid(): boolean {
+  isCompetitionValid(): boolean {
     return this.hasLength(this.competition.startTime)
   }
 

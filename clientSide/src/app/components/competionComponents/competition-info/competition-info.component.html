@@ -1,26 +1,42 @@
+<p-dialog [(visible)]="visible" [dismissableMask]="true" [draggable]="false" [modal]="true" [resizable]="false"
+          [style]="{ width: '50vw' }" header="{{title}}">
+<app-ranking
+  (cancel)="cancel()"
+  (submit)="save($event)"
+  [members]="members"
+></app-ranking>
+</p-dialog>
+<p-toast></p-toast>
+<p-confirmDialog [dismissableMask]="true"
+                 [style]="{width: '45vw'}"
+                 acceptButtonStyleClass="p-button-danger"
+                 acceptIcon="pi pi-trash"
+                 acceptLabel="Delete"
+                 rejectLabel="Cancel"></p-confirmDialog>
+
 
 <div class="surface-section px-4 py-5 md:px-6 lg:px-8">
   <div class="flex align-items-start flex-column lg:justify-content-between lg:flex-row">
     <div>
-      <div class="font-medium text-xl text-900">Customers</div>
+      <div class="font-medium text-xl text-900">{{ competition.code }}</div>
       <div class="flex align-items-center text-700 flex-wrap">
         <div class="mr-5 flex align-items-center mt-3">
-          <i class="pi pi-users mr-2"></i>
-          <span>332 Active Users</span>
+          <i class="pi pi-map-marker mr-2"></i>
+          <span>{{ competition.location }}</span>
         </div>
         <div class="mr-5 flex align-items-center mt-3">
-          <i class="pi pi-globe mr-2"></i>
-          <span>9402 Sessions</span>
+          <i class="pi pi-calendar mr-2"></i>
+          <span>{{ competition.date }}</span>
         </div>
         <div class="flex align-items-center mt-3">
-          <i class="pi pi-clock mr-2"></i>
-          <span>2.32m Avg. Duration</span>
+          <i class="pi pi-user mr-2"></i>
+          <span>{{ competition.numberOfParticipants }}</span>
         </div>
       </div>
     </div>
     <div class="mt-3 lg:mt-0">
-      <button pButton pRipple label="Add" class="p-button-outlined mr-2" icon="pi pi-user-plus"></button>
-      <button pButton pRipple label="Save" icon="pi pi-check"></button>
+      <button pButton pRipple label="Add" class="p-button-outlined mr-2" icon="pi pi-user-plus" (click)="createRanking()"></button>
+<!--      <button pButton pRipple label="Save" icon="pi pi-check"></button>-->
     </div>
   </div>
 </div>
@@ -32,13 +48,14 @@
           <span class="text-xl text-900 font-medium">Competition Members</span>
         </div>
         <ul class="list-none p-0 m-0">
-          <li class="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
-              <div class="mr-0 md:mr-8" >
-                <span class="block text-900 font-medium mb-1">James Cooper</span>
-              </div>
+          <li *ngFor="let ranking of rankings" class="flex flex-column md:flex-row md:align-items-center border-top-1 border-blue-300 md:justify-content-between mb-4">
+            <div class="mr-0 md:mr-8" >
+              <span class="block text-900 font-medium mb-1">{{ranking.member?.name}}</span>
+            </div>
             <div class="mt-2 md:mt-0" >
+              <p-button label="Hunting's" size="small"></p-button>
               <button class="p-element p-ripple p-button-text p-button-plain p-button-rounded mr-1 p-button p-component p-button-icon-only">
-                <span class="p-button-icon pi pi-facebook" aria-hidden="true"></span>
+                <span class="p-button-icon pi pi-trash text-red-500 text-xl" aria-hidden="true"></span>
               </button>
             </div>
           </li>

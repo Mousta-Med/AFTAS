@@ -41,7 +41,7 @@ export class MemberComponent implements OnInit {
           .subscribe({
             next: () => {
               this.findAllMembers();
-              // this.messageService.add({severity: 'success', summary: 'Success', detail: 'Level Created Successfully'});
+              // this.messageService.add({severity: 'success', summary: 'Success', detail: 'Member Created Successfully'});
               // this.member = {};
             }
           });
@@ -50,7 +50,7 @@ export class MemberComponent implements OnInit {
           .subscribe({
             next: () => {
               this.findAllMembers();
-              // this.messageService.add({severity: 'success', summary: 'Success', detail: 'Level Updated Successfully'});
+              // this.messageService.add({severity: 'success', summary: 'Success', detail: 'Member Updated Successfully'});
             }
           });
       }

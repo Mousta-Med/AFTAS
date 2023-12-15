@@ -1,22 +1,59 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {RankingDto} from "../../../models/ranking-dto.model";
 import {MemberDto} from "../../../models/member-dto.model";
-import {FormControl, FormGroup} from "@angular/forms";
+import {MemberService} from "../../../services/member/member.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {CompetitionDto} from "../../../models/competition-dto.model";
 
 @Component({
   selector: 'app-ranking',
   templateUrl: './ranking.component.html',
   styleUrls: ['./ranking.component.scss']
 })
-export class RankingComponent {
+export class RankingComponent implements OnInit{
 
-  ranking: RankingDto = {rank: 0, score: 0, memberNum: 0, competitionCode: ''};
+  members!: MemberDto[];
 
-  rankingForm : FormGroup = new FormGroup({
-    member: new FormControl('0'),
-  });
+  ranking: RankingDto = {rank: 1, score: 0, memberNum: 0, competitionCode: ''};
 
-  @Input() members!: MemberDto[];
+  @Output() submit: EventEmitter<RankingDto> = new EventEmitter<RankingDto>();
 
-  @Output() submit: EventEmitter<RankingDto> = new EventEmitter<RankingDto>()
+  @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private memberService: MemberService
+  ) {
+  }
+
+  ngOnInit() {
+    this.getMembers();
+    this.route.params.subscribe(params => {
+      this.ranking.competitionCode = params['code'];
+    });
+  }
+
+  getMembers(){
+    this.memberService.findAll()
+      .subscribe({
+        next: (data) => {
+          this.members = data;
+        }
+      })
+    ;
+  }
+
+  isMemberNumValid(): boolean {
+    return this.ranking.memberNum !== undefined && this.ranking.memberNum !== null && this.ranking.memberNum !== 0;
+  }
+
+
+  onSubmit(){
+    this.submit.emit(this.ranking);
+  }
+
+  onCancel(){
+    this.cancel.emit();
+  }
 }

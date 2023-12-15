@@ -1,9 +1,8 @@
 <p-dialog [(visible)]="visible" [dismissableMask]="true" [draggable]="false" [modal]="true" [resizable]="false"
-          [style]="{ width: '50vw' }" header="{{title}}">
+          [style]="{ width: '50vw', height:'30rem' }" header="{{title}}">
 <app-ranking
   (cancel)="cancel()"
   (submit)="save($event)"
-  [members]="members"
 ></app-ranking>
 </p-dialog>
 <p-toast></p-toast>

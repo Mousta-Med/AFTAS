@@ -1,3 +1,9 @@
-<form [formGroup]="rankingForm">
-  <p-dropdown formControlName="member" [options]="members" optionLabel="name" placeholder="Select a City"></p-dropdown>
-</form>
+<div class="">
+  <p-dropdown [(ngModel)]="ranking.memberNum" [options]="members" optionLabel="name" optionValue="num"
+              placeholder="Select a Member"></p-dropdown>
+  <div class="flex">
+    <p-button (click)="onSubmit()" [disabled]="!isMemberNumValid()" label="Add" styleClass="p-button-success" icon="pi pi-plus" size="small"></p-button>
+    <p-button (click)="onCancel()" label="Cancel" styleClass="p-button-danger" icon="" size="small"></p-button>
+  </div>
+</div>
+

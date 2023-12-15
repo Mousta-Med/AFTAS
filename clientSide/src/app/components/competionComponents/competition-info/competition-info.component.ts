@@ -67,6 +67,7 @@ export class CompetitionInfoComponent implements OnInit {
         this.messageService.add({severity: 'success', summary: 'Success', detail: 'Member Added Successfully'});
       }
     });
+    this.visible = false;
   }
 
   createRanking() {
@@ -74,6 +75,6 @@ export class CompetitionInfoComponent implements OnInit {
   }
 
   cancel() {
-
+    this.visible = false;
   }
 }

@@ -33,10 +33,15 @@ import { CompetitionInfoComponent } from './components/competionComponents/compe
 import {ChipModule} from "primeng/chip";
 import { RankingComponent } from './components/competionComponents/ranking/ranking.component';
 import {DropdownModule} from "primeng/dropdown";
+import {TagModule} from "primeng/tag";
+import {TabMenuModule} from "primeng/tabmenu";
+import {SelectButtonModule} from "primeng/selectbutton";
+import {PaginatorModule} from "primeng/paginator";
+import { HuntingComponent } from './components/competionComponents/hunting/hunting.component';
 
 @NgModule({
-  declarations: [AppComponent, PagenotfoundComponent, HomeComponent, DashboardComponent, MenuBarComponent, MenuItemComponent, MemberComponent, CompetitionComponent, MemberTableComponent, ManageMemberComponent, CompetitionCardComponent, ManageCompetitionComponent, CompetitionInfoComponent, RankingComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule, MenuModule, FontAwesomeModule, MenubarModule, InputTextModule, RippleModule, ButtonModule, TableModule, SidebarModule, DialogModule, ToastModule, ConfirmDialogModule, FormsModule, ChipModule, DropdownModule],
+  declarations: [AppComponent, PagenotfoundComponent, HomeComponent, DashboardComponent, MenuBarComponent, MenuItemComponent, MemberComponent, CompetitionComponent, MemberTableComponent, ManageMemberComponent, CompetitionCardComponent, ManageCompetitionComponent, CompetitionInfoComponent, RankingComponent, HuntingComponent],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule, MenuModule, FontAwesomeModule, MenubarModule, InputTextModule, RippleModule, ButtonModule, TableModule, SidebarModule, DialogModule, ToastModule, ConfirmDialogModule, FormsModule, ChipModule, DropdownModule, TagModule, TabMenuModule, SelectButtonModule, PaginatorModule],
   providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent]
 })

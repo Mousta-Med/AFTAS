@@ -1,8 +1,10 @@
 <p-dialog [(visible)]="visible" [dismissableMask]="true" [draggable]="false" [modal]="true" [resizable]="false"
-          [style]="{ width: '50vw', height:'30rem' }" header="{{title}}">
+          [style]="{ width: '30vw', height:'11rem' }" header="{{title}}">
 <app-ranking
   (cancel)="cancel()"
   (submit)="save($event)"
+  [ranking]="ranking"
+  [competitionMembers]="members"
 ></app-ranking>
 </p-dialog>
 <p-toast></p-toast>
@@ -12,8 +14,8 @@
                  acceptIcon="pi pi-trash"
                  acceptLabel="Delete"
                  rejectLabel="Cancel"></p-confirmDialog>
-
-
+<p-sidebar [(visible)]="sideBarVisible" position="right">
+</p-sidebar>
 <div class="surface-section px-4 py-5 md:px-6 lg:px-8">
   <div class="flex align-items-start flex-column lg:justify-content-between lg:flex-row">
     <div>
@@ -35,7 +37,6 @@
     </div>
     <div class="mt-3 lg:mt-0">
       <button pButton pRipple label="Add" class="p-button-outlined mr-2" icon="pi pi-user-plus" (click)="createRanking()"></button>
-<!--      <button pButton pRipple label="Save" icon="pi pi-check"></button>-->
     </div>
   </div>
 </div>
@@ -53,7 +54,7 @@
             </div>
             <div class="mt-2 md:mt-0" >
               <p-button label="Hunting's" size="small"></p-button>
-              <button class="p-element p-ripple p-button-text p-button-plain p-button-rounded mr-1 p-button p-component p-button-icon-only">
+              <button (click)="delete(ranking.member)" class="p-element p-ripple p-button-text p-button-plain p-button-rounded mr-1 p-button p-component p-button-icon-only">
                 <span class="p-button-icon pi pi-trash text-red-500 text-xl" aria-hidden="true"></span>
               </button>
             </div>

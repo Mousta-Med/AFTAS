@@ -13,6 +13,8 @@ export class ManageCompetitionComponent implements OnInit, OnChanges {
 
   date: Date = new Date;
 
+  minDate: Date = new Date;
+
   @Input()
   competition!: CompetitionDto;
 
@@ -24,7 +26,7 @@ export class ManageCompetitionComponent implements OnInit, OnChanges {
 
   competitionForm: FormGroup = new FormGroup({
     code: new FormControl(''),
-    date: new FormControl('', [Validators.required, Validators.min(this.date.getDate())]),
+    date: new FormControl('', [Validators.required, Validators.min(this.date.getDate() + 1)]),
     startTime:  new FormControl('',[Validators.required]),
     endTime:  new FormControl('', [Validators.required]),
     numberOfParticipants:  new FormControl('0', [Validators.required, Validators.min(0)]),
@@ -46,6 +48,7 @@ export class ManageCompetitionComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    this.minDate.setDate(this.date.getDate() + 1);
   }
 
   isCompetitionValid(): boolean {

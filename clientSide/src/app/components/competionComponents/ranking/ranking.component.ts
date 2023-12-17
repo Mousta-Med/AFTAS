@@ -1,20 +1,21 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {RankingDto} from "../../../models/ranking-dto.model";
 import {MemberDto} from "../../../models/member-dto.model";
 import {MemberService} from "../../../services/member/member.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {CompetitionDto} from "../../../models/competition-dto.model";
 
 @Component({
   selector: 'app-ranking',
   templateUrl: './ranking.component.html',
   styleUrls: ['./ranking.component.scss']
 })
-export class RankingComponent implements OnInit{
+export class RankingComponent implements  OnChanges{
 
-  members!: MemberDto[];
+  members: MemberDto[] = [];
 
-  ranking: RankingDto = {rank: 1, score: 0, memberNum: 0, competitionCode: ''};
+  @Input() ranking: RankingDto = {rank: 1, score: 0, memberNum: 0, competitionCode: ''};
+
+  @Input() competitionMembers: MemberDto[] = [];
 
   @Output() submit: EventEmitter<RankingDto> = new EventEmitter<RankingDto>();
 
@@ -27,18 +28,25 @@ export class RankingComponent implements OnInit{
   ) {
   }
 
-  ngOnInit() {
+  ngOnChanges(changes: SimpleChanges) {
     this.getMembers();
     this.route.params.subscribe(params => {
       this.ranking.competitionCode = params['code'];
     });
   }
 
+  // ngOnInit() {
+  //   this.getMembers();
+  //   this.route.params.subscribe(params => {
+  //     this.ranking.competitionCode = params['code'];
+  //   });
+  // }
+
   getMembers(){
     this.memberService.findAll()
       .subscribe({
         next: (data) => {
-          this.members = data;
+          this.members = data.filter(member => !this.competitionMembers.some(compMember => compMember.num === member.num));
         }
       })
     ;
@@ -55,5 +63,6 @@ export class RankingComponent implements OnInit{
 
   onCancel(){
     this.cancel.emit();
+    this.ranking = {rank: 1, score: 0, memberNum: 0, competitionCode: ''};
   }
 }

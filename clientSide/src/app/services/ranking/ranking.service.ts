@@ -25,8 +25,8 @@ export class RankingService {
     return this.http.get<RankingDto[]>(this.rankingUrl);
   }
 
-  find(id: number): Observable<RankingDto>{
-    return this.http.get<RankingDto>(`${this.rankingUrl}/${id}`);
+  find(competitionCode: string, memberNum: number): Observable<RankingDto>{
+    return this.http.get<RankingDto>(`${this.rankingUrl}/${competitionCode}/${memberNum}`);
   }
 
 
@@ -34,7 +34,7 @@ export class RankingService {
     return this.http.put<RankingDto>(`${this.rankingUrl}/${id}`, ranking);
   }
 
-  delete(id: number): Observable<void>{
-    return this.http.delete<void>(`${this.rankingUrl}/${id}`);
+  delete(competitionCode: string, memberNum: number | undefined): Observable<void>{
+    return this.http.delete<void>(`${this.rankingUrl}/${competitionCode}/${memberNum}`);
   }
 }

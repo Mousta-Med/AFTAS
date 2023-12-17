@@ -14,13 +14,23 @@ import {MemberDto} from "../../../models/member-dto.model";
 })
 export class CompetitionInfoComponent implements OnInit {
 
-  competition: CompetitionDto = {code: '', date: '', startTime: '', endTime: '', location: '', numberOfParticipants: 0, amount:0};
+  competition: CompetitionDto = {
+    code: '',
+    date: '',
+    startTime: '',
+    endTime: '',
+    location: '',
+    numberOfParticipants: 0,
+    amount: 0
+  };
+
+  sideBarVisible: boolean = false;
 
   rankings: RankingDto[] = [];
 
-  members!: MemberDto[];
+  members: MemberDto[] = [];
 
-  // ranking: RankingDto = {rank: 0, score: 0, memberNum: 0, competitionCode: ''};
+  ranking: RankingDto = {rank: 0, score: 0, memberNum: 0, competitionCode: ''};
 
   title: string = 'Assign Member';
 
@@ -33,7 +43,8 @@ export class CompetitionInfoComponent implements OnInit {
     private rankingService: RankingService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -42,29 +53,45 @@ export class CompetitionInfoComponent implements OnInit {
     });
   }
 
-  getCompetition(code: string){
+  getCompetition(code: string) {
     this.competitionService.find(code).subscribe({
       next: (data) => {
         this.competition = data;
-      },error: (error) => {
+      }, error: (error) => {
         this.router.navigate(['/notFound']);
       }
     });
   }
 
-  getRankings(code: string){
+
+  getRankings(code: string) {
     this.rankingService.findRankingsByCompetitionCode(code).subscribe({
       next: (data) => {
         this.rankings = data;
+        this.members = [];
+        for (const index in this.rankings) {
+          const ranking = this.rankings[index];
+          if (ranking.member) {
+            this.members.push(ranking.member);
+          }
+        }
       }
     });
   }
 
-  save(ranking: RankingDto){
+
+
+  save(ranking: RankingDto) {
     this.rankingService.save(ranking).subscribe({
       next: (data) => {
-        this.ngOnInit();
+        this.route.params.subscribe(params => {
+          this.getCompetition(params['code']);
+          this.getRankings(params['code']);
+        });
         this.messageService.add({severity: 'success', summary: 'Success', detail: 'Member Added Successfully'});
+      }, error: (err) => {
+        console.log(err)
+        this.messageService.add({severity: 'error', summary: 'Error', detail: err.error});
       }
     });
     this.visible = false;
@@ -72,9 +99,31 @@ export class CompetitionInfoComponent implements OnInit {
 
   createRanking() {
     this.visible = true;
+    this.ranking = {rank: 1, score: 0, memberNum: 0, competitionCode: ''};
   }
 
   cancel() {
     this.visible = false;
+  }
+
+  delete(member: MemberDto | undefined) {
+    this.confirmationService.confirm({
+      header: 'Delete competition',
+      message: `Are you sure you want to remove this member: ${member?.name} ? You can\'t undo this action afterwords`,
+      accept: () => {
+        this.rankingService.delete(this.competition.code, member?.num)
+          .subscribe({
+            next: () => {
+              this.route.params.subscribe(params => {
+                this.getCompetition(params['code']);
+                this.getRankings(params['code']);
+              });
+              this.messageService.add({
+                severity: 'success', summary: 'Member removed', detail: `member removed successfully`
+              });
+            }
+          });
+      }
+    });
   }
 }

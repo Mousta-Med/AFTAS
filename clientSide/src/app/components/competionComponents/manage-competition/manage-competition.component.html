@@ -6,7 +6,7 @@
         <span class="p-input-icon-left w-full">
         <i class="pi pi-calendar"></i>
         <input class="p-inputtext p-component p-element w-full" formControlName="date" id="date"
-               min="{{date | date:'yyyy-MM-dd'}}" placeholder="" type="date">
+               min="{{minDate | date:'yyyy-MM-dd'}}" placeholder="" type="date">
         </span>
         <div *ngIf="competitionForm.controls?.['date']?.touched">
           <small *ngIf="competitionForm.controls?.['date']?.errors?.['required']" class="text-red-300">Date is required.</small>

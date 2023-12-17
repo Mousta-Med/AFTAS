@@ -3,6 +3,7 @@ import {CompetitionDto} from "../../../models/competition-dto.model";
 import {CompetitionService} from "../../../services/competition/competition.service";
 import {ConfirmationService, MessageService} from "primeng/api";
 
+
 @Component({
   selector: 'app-competition', templateUrl: './competition.component.html', styleUrls: ['./competition.component.scss']
 })
@@ -16,7 +17,26 @@ export class CompetitionComponent implements OnInit {
 
   competitions!: CompetitionDto[];
 
+  length: number = 0;
+
   visible: boolean = false;
+
+  first: number = 0;
+
+  rows: number = 10;
+
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.rows = event.rows;
+  }
+
+  value: any;
+
+  filterOptions: any[] = [
+    { icon: 'pi pi-check', value: 'passed', name: 'Passed' },
+    { icon: 'pi pi-play', value: 'ongoing', name: 'On Going' },
+    { icon: 'pi pi-calendar', value: 'upcoming', name: 'Upcoming' }
+  ];
 
   constructor(private competitionService: CompetitionService, private confirmationService: ConfirmationService, private messageService: MessageService) {
   }
@@ -33,6 +53,7 @@ export class CompetitionComponent implements OnInit {
       .subscribe({
         next: (data) => {
           this.competitions = data;
+          this.length = this.competitions.length;
         }
       });
   }
@@ -113,5 +134,4 @@ export class CompetitionComponent implements OnInit {
   cancel() {
     this.visible = false;
   }
-
 }

@@ -1,7 +1,7 @@
-<div class="">
-  <p-dropdown [(ngModel)]="ranking.memberNum" [options]="members" optionLabel="name" optionValue="num"
-              placeholder="Select a Member"></p-dropdown>
-  <div class="flex">
+<div class="flex align-items-center justify-content-around">
+  <p-dropdown appendTo="body"  [(ngModel)]="ranking.memberNum" [options]="members" optionLabel="name" optionValue="num"
+              placeholder="Select a Member" [editable]="true"></p-dropdown>
+  <div class="flex gap-3">
     <p-button (click)="onSubmit()" [disabled]="!isMemberNumValid()" label="Add" styleClass="p-button-success" icon="pi pi-plus" size="small"></p-button>
     <p-button (click)="onCancel()" label="Cancel" styleClass="p-button-danger" icon="" size="small"></p-button>
   </div>

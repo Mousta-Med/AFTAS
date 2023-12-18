@@ -17,11 +17,16 @@
       <td>{{ member.identityDocument }}</td>
       <td>{{ member.identityNumber }}</td>
       <td>
-        <button pButton pRipple type="button" icon="pi pi-pencil"
+        <button (click)="onUpdate(member)" pButton pRipple type="button" icon="pi pi-pencil"
                 class="p-button-rounded p-button-text"></button>
-        <button pButton pRipple type="button" icon="pi pi-trash"
+        <button (click)="onDelete(member)" pButton pRipple type="button" icon="pi pi-trash"
                 class="p-button-rounded p-button-danger p-button-text"></button>
       </td>
+    </tr>
+  </ng-template>
+  <ng-template *ngIf="members?.length === 0" pTemplate="footer">
+    <tr>
+      <td colspan="7">No customers found.</td>
     </tr>
   </ng-template>
 </p-table>

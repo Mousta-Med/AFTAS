@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {MemberDto} from "../../../models/member-dto.model";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-manage-member',
@@ -13,32 +14,36 @@ export class ManageMemberComponent implements OnChanges{
   @Input()
   member!: MemberDto;
 
-  @Input()
-  operation: 'create' | 'update' = 'create'
-
   @Output()
   submit: EventEmitter<MemberDto> = new EventEmitter<MemberDto>();
 
   @Output()
   cancel: EventEmitter<void> = new EventEmitter<void>();
 
+  memberForm: FormGroup = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    familyName:  new FormControl('',[Validators.required]),
+    accessionDate:  new FormControl('',[Validators.required]),
+    nationality:  new FormControl('', [Validators.required]),
+    identityDocument:  new FormControl('null', [Validators.required]),
+    identityNumber:  new FormControl('0',[Validators.required]),
+  });
+
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.operation === 'update') {
-      this.title = 'Update Member';
-    } else {
-      this.title = 'New Member';
+    if (this.member){
+      this.memberForm = new FormGroup({
+        name: new FormControl(this.member.name),
+        familyName:  new FormControl(this.member.familyName),
+        accessionDate:  new FormControl(this.member.accessionDate),
+        nationality:  new FormControl(this.member.nationality),
+        identityDocument:  new FormControl(this.member.identityDocument),
+        identityNumber:  new FormControl(this.member.identityNumber),
+      });
     }
   }
 
-  get ismemberValid(): boolean {
-    return this.hasLength(this.member.name)
-  }
-
-  private hasLength(input: string | undefined): boolean {
-    return input !== null && input !== undefined && input.length > 0
-  }
-
   onSubmit() {
+    this.member = this.memberForm.value;
     this.submit.emit(this.member);
   }
 

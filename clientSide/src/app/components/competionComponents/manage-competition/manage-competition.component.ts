@@ -51,13 +51,6 @@ export class ManageCompetitionComponent implements OnInit, OnChanges {
     this.minDate.setDate(this.date.getDate() + 1);
   }
 
-  isCompetitionValid(): boolean {
-    return this.hasLength(this.competition.startTime)
-  }
-
-  private hasLength(input: string | undefined): boolean {
-    return input !== null && input !== undefined && input.length > 0
-  }
 
   onSubmit() {
     this.competition = this.competitionForm.value;

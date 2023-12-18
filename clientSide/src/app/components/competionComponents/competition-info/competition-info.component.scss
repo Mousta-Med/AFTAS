@@ -1,0 +1,59 @@
+.container {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.podium_item {
+  flex: 1;
+  max-width: 200px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+}
+
+.podium_item:hover {
+  transform: translateY(-5px);
+}
+
+.podium_rank {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 35px;
+  color: #333;
+  width: 100%;
+  height: 100px;
+}
+
+.podium_city {
+  text-align: center;
+  padding: 1rem;
+  font-size: 16px;
+  color: #333;
+}
+
+
+.first {
+  height: 19rem;
+  background: linear-gradient(333deg, rgba(255, 172, 37, 0.8) 0%, rgba(254, 207, 51, 0.8) 13%, rgba(254, 224, 51, 0.8) 53%, rgba(255, 172, 37, 0.8) 100%);
+}
+
+.firstRank{
+  font-size: 6rem;
+}
+.secondRank{
+  font-size: 3rem;
+}
+
+.second {
+  height: 15rem;
+  background-color: #3498db;
+}
+
+.third {
+  background-color: #27ae60;
+}

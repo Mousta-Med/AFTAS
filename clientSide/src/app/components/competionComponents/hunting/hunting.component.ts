@@ -18,6 +18,9 @@ export class HuntingComponent {
   @Output()
   add: EventEmitter<void> = new EventEmitter<void>();
 
+  @Output()
+  delete: EventEmitter<number> = new EventEmitter<number>();
+
 
 
   onCancel() {
@@ -26,5 +29,9 @@ export class HuntingComponent {
 
   addHunting() {
     this.add.emit();
+  }
+
+  onDelete(id: number) {
+    this.delete.emit(id);
   }
 }

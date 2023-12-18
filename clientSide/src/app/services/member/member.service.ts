@@ -25,13 +25,16 @@ export class MemberService {
   find(id: number): Observable<MemberDto>{
     return this.http.get<MemberDto>(`${this.memberUrl}/${id}`);
   }
+  findByQuery(query: string): Observable<MemberDto[]>{
+    return this.http.get<MemberDto[]>(`${this.memberUrl}/search/${query}`);
+  }
 
 
   update(id: number | undefined, member: MemberDto): Observable<MemberDto>{
     return this.http.put<MemberDto>(`${this.memberUrl}/${id}`, member);
   }
 
-  delete(id: number): Observable<void>{
+  delete(id: number | undefined): Observable<void>{
     return this.http.delete<void>(`${this.memberUrl}/${id}`);
   }
 }

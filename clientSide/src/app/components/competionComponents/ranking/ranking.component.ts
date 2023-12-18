@@ -65,4 +65,8 @@ export class RankingComponent implements  OnChanges{
     this.cancel.emit();
     this.ranking = {rank: 1, score: 0, memberNum: 0, competitionCode: ''};
   }
+
+  newMember() {
+    this.router.navigate(['/members'])
+  }
 }

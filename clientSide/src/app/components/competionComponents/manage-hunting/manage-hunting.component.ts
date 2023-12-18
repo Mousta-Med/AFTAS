@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {FishDto} from "../../../models/fish-dto.model";
 import {FishService} from "../../../services/fish/fish.service";
 import {HuntingDto} from "../../../models/hunting-dto.model";
@@ -10,6 +10,7 @@ import {HuntingDto} from "../../../models/hunting-dto.model";
 })
 export class ManageHuntingComponent implements OnInit, OnChanges {
 
+  @Input()
   hunting: HuntingDto = {id: 0, competitionCode: '', fishName: '', numberOfFish: 0, memberNum: 0};
 
   @Output()
@@ -45,10 +46,16 @@ export class ManageHuntingComponent implements OnInit, OnChanges {
 
 
   onCancel() {
+    this.hunting.numberOfFish = 0;
+    this.hunting.fishName = '';
     this.cancel.emit('hunt');
   }
 
   addHunting() {
     this.submit.emit(this.hunting);
+  }
+
+  isHuntingValid(): boolean {
+    return this.hunting.numberOfFish > 0 && this.hunting.numberOfFish !== undefined
   }
 }

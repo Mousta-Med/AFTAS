@@ -26,6 +26,8 @@ export class CompetitionInfoComponent implements OnInit {
     amount: 0
   };
 
+  hunting: HuntingDto = {id: 0, competitionCode: '', fishName: '', numberOfFish: 0, memberNum: 0};
+
   sideBarVisible: boolean = false;
 
   rankings: RankingDto[] = [];
@@ -41,7 +43,10 @@ export class CompetitionInfoComponent implements OnInit {
   title: string = 'Assign Member';
 
   visible: boolean = false;
+
   huntingVisible: boolean = false;
+
+  podiumVisible: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -97,7 +102,6 @@ export class CompetitionInfoComponent implements OnInit {
         });
         this.messageService.add({severity: 'success', summary: 'Success', detail: 'Member Added Successfully'});
       }, error: (err) => {
-        console.log(err)
         this.messageService.add({severity: 'error', summary: 'Error', detail: err.error});
       }
     });
@@ -117,7 +121,7 @@ export class CompetitionInfoComponent implements OnInit {
     this.huntingVisible = false;
   }
 
-  delete(member: MemberDto | undefined) {
+  deleteMember(member: MemberDto | undefined) {
     this.confirmationService.confirm({
       header: 'Delete competition',
       message: `Are you sure you want to remove this member: ${member?.name} ? You can\'t undo this action afterwords`,
@@ -138,37 +142,77 @@ export class CompetitionInfoComponent implements OnInit {
     });
   }
 
-  getHuntings(code: string, num: number | undefined){
+  deleteHunting(id: number) {
+    this.confirmationService.confirm({
+      header: 'Delete competition',
+      message: `Are you sure you want to remove this hunt ? You can\'t undo this action afterwords`,
+      accept: () => {
+        this.huntingService.delete(id)
+          .subscribe({
+            next: () => {
+              this.setupRanking();
+              this.getHuntings(this.competition.code, this.currentMember);
+              this.messageService.add({
+                severity: 'success', summary: 'Hunting removed', detail: `Hunting removed successfully`
+              });
+            }
+          });
+      }
+    });
+  }
+
+  getHuntings(code: string, num: number | undefined) {
     this.huntingService.findMemberHuntings(code, num)
       .subscribe({
-        next:(data => {
+        next: (data => {
           this.huntings = data;
         })
       })
   }
 
-  hunting(num: number | undefined) {
+  setHunting(num: number | undefined) {
     this.sideBarVisible = true;
     this.getHuntings(this.competition.code, num);
     this.currentMember = num;
   }
 
   createHunting() {
+    this.hunting = {id: 0, competitionCode: this.competition.code, fishName: '', numberOfFish: 0, memberNum: this.currentMember};
     this.huntingVisible = true;
   }
 
-  saveHunting(hunting: HuntingDto){
+  saveHunting(hunting: HuntingDto) {
     hunting.memberNum = this.currentMember;
     hunting.competitionCode = this.competition.code;
     this.huntingService.save(hunting).subscribe({
-      next:(data) => {
-        this.hunting(hunting.memberNum);
+      next: (data) => {
+        this.setupRanking();
+        this.getRankings(this.competition.code);
+        this.setHunting(hunting.memberNum);
         this.messageService.add({severity: 'success', summary: 'Success', detail: 'Hunting Added Successfully'});
       }, error: (err) => {
         console.log(err)
-        this.messageService.add({severity: 'error', summary: 'Error', detail: err.error});
+        if (err.error.fishName) {
+          this.messageService.add({severity: 'error', summary: 'Error', detail: err.error.fishName});
+        } else {
+          this.messageService.add({severity: 'error', summary: 'Error', detail: err.error});
+        }
       }
     })
     this.huntingVisible = false;
+  }
+
+  createPodium() {
+    this.setupRanking();
+    this.podiumVisible = true;
+  }
+
+  setupRanking(){
+    this.rankingService.setupRankings(this.competition.code)
+      .subscribe({
+      next: () => {
+        this.getRankings(this.competition.code);
+      }
+    })
   }
 }

@@ -21,6 +21,10 @@ export class RankingService {
     return this.http.get<RankingDto[]>(`${this.rankingUrl}/${code}`);
   }
 
+  setupRankings(code: string): Observable<RankingDto[]>{
+    return this.http.get<RankingDto[]>(`${this.rankingUrl}/ranking/${code}`);
+  }
+
   findAll(): Observable<RankingDto[]>{
     return this.http.get<RankingDto[]>(this.rankingUrl);
   }

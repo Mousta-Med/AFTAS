@@ -14,7 +14,10 @@
     <tr>
       <td>{{ hunting.fish.name }}</td>
       <td>{{ hunting.numberOfFish }}</td>
-      <td>{{ 'delete' }}</td>
+      <td>
+        <button pButton pRipple (click)="onDelete(hunting.id)" type="button" icon="pi pi-trash"
+                  class="p-button-rounded p-button-danger p-button-text"></button>
+      </td>
     </tr>
   </ng-template>
 </p-table>

@@ -38,9 +38,10 @@ import {TabMenuModule} from "primeng/tabmenu";
 import {SelectButtonModule} from "primeng/selectbutton";
 import {PaginatorModule} from "primeng/paginator";
 import { HuntingComponent } from './components/competionComponents/hunting/hunting.component';
+import { ManageHuntingComponent } from './components/competionComponents/manage-hunting/manage-hunting.component';
 
 @NgModule({
-  declarations: [AppComponent, PagenotfoundComponent, HomeComponent, DashboardComponent, MenuBarComponent, MenuItemComponent, MemberComponent, CompetitionComponent, MemberTableComponent, ManageMemberComponent, CompetitionCardComponent, ManageCompetitionComponent, CompetitionInfoComponent, RankingComponent, HuntingComponent],
+  declarations: [AppComponent, PagenotfoundComponent, HomeComponent, DashboardComponent, MenuBarComponent, MenuItemComponent, MemberComponent, CompetitionComponent, MemberTableComponent, ManageMemberComponent, CompetitionCardComponent, ManageCompetitionComponent, CompetitionInfoComponent, RankingComponent, HuntingComponent, ManageHuntingComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule, MenuModule, FontAwesomeModule, MenubarModule, InputTextModule, RippleModule, ButtonModule, TableModule, SidebarModule, DialogModule, ToastModule, ConfirmDialogModule, FormsModule, ChipModule, DropdownModule, TagModule, TabMenuModule, SelectButtonModule, PaginatorModule],
   providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent]

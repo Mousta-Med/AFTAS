@@ -1,0 +1,23 @@
+<div class="flex mx-4">
+  <div class="w-full">
+    <label class="block mb-1 text-color text-base" for="fiches">Fish</label>
+    <span
+      class="p-input-icon-left w-full">
+          <i class="pi pi-clock"></i>
+          <p-dropdown id="fiches" appendTo="body" optionValue="name" [options]="fiches" [(ngModel)]="hunting.fishName" optionLabel="name" [showClear]="true" placeholder="Select a Fish"></p-dropdown>
+        </span>
+  </div>
+  <div class="w-full">
+    <label class="block mb-1 text-color text-base" for="numOfFiches">Fish Number</label>
+    <span
+      class="p-input-icon-left w-full">
+        <i class="pi pi-sort-numeric-up"></i>
+        <input class="p-inputtext p-component p-element w-full" [(ngModel)]="hunting.numberOfFish" id="numOfFiches"
+               placeholder="Number Of Fishes" type="number">
+        </span>
+  </div>
+</div>
+<div class="flex justify-content-center align-items-center mt-5">
+  <button pButton pRipple label="Cancel" class="mr-2 p-button-danger"  (click)="onCancel()"></button>
+  <button pButton pRipple label="Add" class="p-button-outlined mr-2" icon="pi pi-plus" (click)="addHunting()"></button>
+</div>

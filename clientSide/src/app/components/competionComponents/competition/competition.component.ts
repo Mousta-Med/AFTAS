@@ -41,8 +41,6 @@ export class CompetitionComponent implements OnInit {
   constructor(private competitionService: CompetitionService, private confirmationService: ConfirmationService, private messageService: MessageService) {
   }
 
-
-
   ngOnInit() {
     this.findAllCompetitions();
   }

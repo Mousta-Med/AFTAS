@@ -6,6 +6,8 @@ import {RankingDto} from "../../../models/ranking-dto.model";
 import {RankingService} from "../../../services/ranking/ranking.service";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {MemberDto} from "../../../models/member-dto.model";
+import {HuntingService} from "../../../services/hunting/hunting.service";
+import {HuntingDto} from "../../../models/hunting-dto.model";
 
 @Component({
   selector: 'app-competition-info',
@@ -28,13 +30,18 @@ export class CompetitionInfoComponent implements OnInit {
 
   rankings: RankingDto[] = [];
 
+  huntings: HuntingDto[] = [];
+
   members: MemberDto[] = [];
+
+  currentMember: number | undefined = 0;
 
   ranking: RankingDto = {rank: 0, score: 0, memberNum: 0, competitionCode: ''};
 
   title: string = 'Assign Member';
 
   visible: boolean = false;
+  huntingVisible: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -42,7 +49,8 @@ export class CompetitionInfoComponent implements OnInit {
     private competitionService: CompetitionService,
     private rankingService: RankingService,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private huntingService: HuntingService
   ) {
   }
 
@@ -80,7 +88,6 @@ export class CompetitionInfoComponent implements OnInit {
   }
 
 
-
   save(ranking: RankingDto) {
     this.rankingService.save(ranking).subscribe({
       next: (data) => {
@@ -102,8 +109,12 @@ export class CompetitionInfoComponent implements OnInit {
     this.ranking = {rank: 1, score: 0, memberNum: 0, competitionCode: ''};
   }
 
-  cancel() {
+  cancel(event: any) {
     this.visible = false;
+    if (event !== 'hunt') {
+      this.sideBarVisible = false;
+    }
+    this.huntingVisible = false;
   }
 
   delete(member: MemberDto | undefined) {
@@ -125,5 +136,39 @@ export class CompetitionInfoComponent implements OnInit {
           });
       }
     });
+  }
+
+  getHuntings(code: string, num: number | undefined){
+    this.huntingService.findMemberHuntings(code, num)
+      .subscribe({
+        next:(data => {
+          this.huntings = data;
+        })
+      })
+  }
+
+  hunting(num: number | undefined) {
+    this.sideBarVisible = true;
+    this.getHuntings(this.competition.code, num);
+    this.currentMember = num;
+  }
+
+  createHunting() {
+    this.huntingVisible = true;
+  }
+
+  saveHunting(hunting: HuntingDto){
+    hunting.memberNum = this.currentMember;
+    hunting.competitionCode = this.competition.code;
+    this.huntingService.save(hunting).subscribe({
+      next:(data) => {
+        this.hunting(hunting.memberNum);
+        this.messageService.add({severity: 'success', summary: 'Success', detail: 'Hunting Added Successfully'});
+      }, error: (err) => {
+        console.log(err)
+        this.messageService.add({severity: 'error', summary: 'Error', detail: err.error});
+      }
+    })
+    this.huntingVisible = false;
   }
 }

@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Integer> {
-    List<Member> findMemberByNameOrFamilyName(String name, String familyName);
+    List<Member> findMemberByNameContainingIgnoreCaseOrFamilyNameContainingIgnoreCase(String name, String familyName);
 }

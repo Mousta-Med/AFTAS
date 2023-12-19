@@ -15,7 +15,7 @@ public class HuntingDto {
 
     private Integer id;
 
-    @PositiveOrZero(message = "number Of Fish should not be negative")
+    @Positive(message = "number Of Fish should not be 0 or negative")
     private Integer numberOfFish;
 
     @NotBlank(message = "fish name should not be blank")

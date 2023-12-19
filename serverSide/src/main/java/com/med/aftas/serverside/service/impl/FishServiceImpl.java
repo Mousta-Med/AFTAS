@@ -4,7 +4,9 @@ import com.med.aftas.serverside.dto.FishDto;
 import com.med.aftas.serverside.dto.respDto.FishRespDto;
 import com.med.aftas.serverside.exception.ResourceNotFoundException;
 import com.med.aftas.serverside.model.Fish;
+import com.med.aftas.serverside.model.Level;
 import com.med.aftas.serverside.repository.FishRepository;
+import com.med.aftas.serverside.repository.LevelRepository;
 import com.med.aftas.serverside.service.FishService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
@@ -19,8 +21,12 @@ import java.util.stream.Collectors;
 
 @Service
 public class FishServiceImpl implements FishService {
+
     @Autowired
     private FishRepository fishRepository;
+
+    @Autowired
+    private LevelRepository levelRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -32,7 +38,9 @@ public class FishServiceImpl implements FishService {
         if (fishOptional.isPresent()){
             throw new ResourceNotFoundException("Fish already exist");
         }
+        Level level = levelRepository.findById(fishDto.getLevelCode()).orElseThrow(() -> new ResourceNotFoundException("Level Not found"));
         Fish fish = modelMapper.map(fishDto, Fish.class);
+        fish.setLevel(level);
         return modelMapper.map(fishRepository.save(fish), FishRespDto.class);
     }
 
@@ -45,8 +53,10 @@ public class FishServiceImpl implements FishService {
     @Override
     public FishRespDto update(String id, FishDto fishDto) {
         Fish existingFish = fishRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Fish Not found with this: " + id));
+        Level level = levelRepository.findById(fishDto.getLevelCode()).orElseThrow(() -> new ResourceNotFoundException("Level Not found"));
         BeanUtils.copyProperties(fishDto, existingFish);
         existingFish.setName(id);
+        existingFish.setLevel(level);
         return modelMapper.map(fishRepository.save(existingFish), FishRespDto.class);
     }
 

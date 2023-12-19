@@ -5,6 +5,7 @@ import com.med.aftas.serverside.dto.respDto.CompetitionRespDto;
 import com.med.aftas.serverside.service.impl.CompetitionServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,12 +26,21 @@ public class CompetitionController {
     }
 
     @GetMapping("/paginated")
-    public ResponseEntity<List<CompetitionRespDto>> getPaginatedCompetitions(
+    public ResponseEntity<Page<CompetitionRespDto>> getPaginatedCompetitions(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size
     ) {
         PageRequest pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(competitionServiceImpl.findWithPagination(pageable).getContent());
+        return ResponseEntity.ok(competitionServiceImpl.findWithPagination(pageable));
+    }
+    @GetMapping("/filtered")
+    public ResponseEntity<Page<CompetitionRespDto>> getFilteredCompetitions(
+            @RequestParam(name = "filter", defaultValue = "null") String filter,
+            @RequestParam(name = "page", defaultValue = "0") Integer page,
+            @RequestParam(name = "size", defaultValue = "10") Integer size
+    ) {
+        PageRequest pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(competitionServiceImpl.getFilteredCompetitions(filter,pageable));
     }
 
     @GetMapping("/date")

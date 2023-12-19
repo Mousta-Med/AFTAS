@@ -19,7 +19,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -49,17 +51,21 @@ public class HuntingServiceImpl implements HuntingService {
         Fish fish = fishRepository.findById(huntingDto.getFishName()).orElseThrow(() -> new ResourceNotFoundException("Fish Not found"));
         Optional<Hunting> huntingOptional = huntingRepository.getHuntingByCompetitionCodeAndFishNameAndMemberNum(huntingDto.getCompetitionCode(), huntingDto.getFishName(), huntingDto.getMemberNum());
         Hunting hunting;
-        if (huntingOptional.isPresent()) {
-            hunting = huntingOptional.get();
-            hunting.setCompetition(competition);
-            hunting.setMember(member);
-            hunting.setFish(fish);
-            hunting.setNumberOfFish(hunting.getNumberOfFish() + huntingDto.getNumberOfFish());
+        if (Objects.equals(competition.getDate(), LocalDate.now())) {
+            if (huntingOptional.isPresent()) {
+                hunting = huntingOptional.get();
+                hunting.setCompetition(competition);
+                hunting.setMember(member);
+                hunting.setFish(fish);
+                hunting.setNumberOfFish(hunting.getNumberOfFish() + huntingDto.getNumberOfFish());
+            } else {
+                hunting = modelMapper.map(huntingDto, Hunting.class);
+                hunting.setCompetition(competition);
+                hunting.setMember(member);
+                hunting.setFish(fish);
+            }
         } else {
-            hunting = modelMapper.map(huntingDto, Hunting.class);
-            hunting.setCompetition(competition);
-            hunting.setMember(member);
-            hunting.setFish(fish);
+            throw new IllegalStateException("You Cannot Add hunting's if Competition end or not started yet");
         }
         return modelMapper.map(huntingRepository.save(hunting), HuntingRespDto.class);
     }

@@ -37,6 +37,11 @@ public class HuntingController {
         return ResponseEntity.ok(huntingServiceImpl.findOne(id));
     }
 
+    @GetMapping("/{competitionCode}/{memberNum}")
+    public ResponseEntity<List<HuntingRespDto>> getHuntingsByCompetitionCodeAndMemberNum(@PathVariable String competitionCode, @PathVariable Integer memberNum) {
+        return ResponseEntity.ok(huntingServiceImpl.getHuntingsByCompetitionCodeAndMemberNum(competitionCode, memberNum));
+    }
+
     @PostMapping
     public ResponseEntity<HuntingRespDto> saveHunting(@RequestBody @Valid HuntingDto huntingDto) {
         return ResponseEntity.ok(huntingServiceImpl.save(huntingDto));

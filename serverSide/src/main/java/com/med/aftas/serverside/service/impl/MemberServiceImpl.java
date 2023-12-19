@@ -65,7 +65,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public List<MemberRespDto> findByNameOrFamilyName(String query) {
-        return memberRepository.findMemberByNameOrFamilyName(query, query)
+        return memberRepository.findMemberByNameContainingIgnoreCaseOrFamilyNameContainingIgnoreCase(query, query)
                 .stream().map(member -> modelMapper.map(member, MemberRespDto.class)).collect(Collectors.toList());
     }
 }

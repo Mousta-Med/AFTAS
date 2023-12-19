@@ -31,8 +31,9 @@ public class CompetitionServiceImpl implements CompetitionService {
     @Override
     public CompetitionRespDto save(CompetitionDto competitionDto) {
         Optional<Competition> competitionOptional = competitionRepository.findById(competitionDto.getCode());
-        if (competitionOptional.isPresent()){
-            throw new ResourceNotFoundException("Competition already exist");
+        List<Competition> competitionWithDate = competitionRepository.findCompetitionByDate(competitionDto.getDate());
+        if (competitionOptional.isPresent() || !competitionWithDate.isEmpty()) {
+            throw new ResourceNotFoundException("Competition already exist with same name or date");
         }
         Competition competition = modelMapper.map(competitionDto, Competition.class);
         return modelMapper.map(competitionRepository.save(competition), CompetitionRespDto.class);
@@ -74,4 +75,25 @@ public class CompetitionServiceImpl implements CompetitionService {
     public List<CompetitionRespDto> findCompetitionsWithDate(LocalDate date) {
         return competitionRepository.findCompetitionByDate(date).stream().map(competition -> modelMapper.map(competition, CompetitionRespDto.class)).collect(Collectors.toList());
     }
+
+    @Override
+    public Page<CompetitionRespDto> getFilteredCompetitions(String filter, Pageable pageable) {
+        LocalDate currentDate = LocalDate.now();
+        Page<Competition> competitionsPage;
+        switch (filter) {
+            case "passed":
+                competitionsPage = competitionRepository.findCompetitionsByDateBefore(currentDate, pageable);
+                return competitionsPage.map(competition -> modelMapper.map(competition, CompetitionRespDto.class));
+            case "ongoing":
+                competitionsPage = competitionRepository.findCompetitionsByDate(currentDate, pageable);
+                return competitionsPage.map(competition -> modelMapper.map(competition, CompetitionRespDto.class));
+            case "upcoming":
+                competitionsPage = competitionRepository.findCompetitionsByDateAfter(currentDate, pageable);
+                return competitionsPage.map(competition -> modelMapper.map(competition, CompetitionRespDto.class));
+            default:
+                competitionsPage = competitionRepository.findAll(pageable);
+                return competitionsPage.map(competition -> modelMapper.map(competition, CompetitionRespDto.class));
+        }
+    }
+
 }

@@ -20,5 +20,5 @@ public class FishDto {
     private Double averageWeight;
 
     @NotNull(message = "level id should not be null")
-    private LevelDto level;
+    private Integer levelCode;
 }

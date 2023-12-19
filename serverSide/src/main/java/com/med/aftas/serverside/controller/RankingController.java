@@ -60,4 +60,9 @@ public class RankingController {
         rankingServiceImpl.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/ranking/{competitionCode}")
+    public ResponseEntity<List<RankingRespDto>> setCompetitionRankings(@PathVariable("competitionCode") final String competitionCode) {
+        return ResponseEntity.ok(rankingServiceImpl.SetUpCompetitionRankings(competitionCode));
+    }
 }

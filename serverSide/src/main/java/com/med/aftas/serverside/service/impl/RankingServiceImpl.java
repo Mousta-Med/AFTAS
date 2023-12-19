@@ -56,7 +56,6 @@ public class RankingServiceImpl implements RankingService {
         }
         Competition competition = competitionRepository.findById(rankingDto.getCompetitionCode()).orElseThrow(() -> new ResourceNotFoundException("Competition Not found"));
         Member member = memberRepository.findById(rankingDto.getMemberNum()).orElseThrow(() -> new ResourceNotFoundException("Member Not found"));
-//        List<Ranking> rankings = rankingRepository.findRankingsByCompetitionCode(competition.getCode());
         LocalDate currentDate = LocalDate.now();
         LocalDate startDate = competition.getDate();
         if (ChronoUnit.DAYS.between(currentDate, startDate) < 1) {
@@ -109,6 +108,7 @@ public class RankingServiceImpl implements RankingService {
     public List<RankingRespDto> findWithCompetitionCode(String code) {
         return rankingRepository.findRankingsByCompetitionCodeOrderByScoreDesc(code).stream().map(ranking -> modelMapper.map(ranking, RankingRespDto.class)).collect(Collectors.toList());
     }
+
 
     @Override
     public List<RankingRespDto> SetUpCompetitionRankings(String competitionCode) {

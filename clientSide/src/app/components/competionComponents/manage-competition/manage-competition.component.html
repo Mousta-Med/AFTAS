@@ -7,10 +7,6 @@
         <input class="p-inputtext p-component p-element w-full" formControlName="date" id="date"
                min="{{minDate | date:'yyyy-MM-dd'}}" placeholder="" type="date">
         </span>
-      <div *ngIf="competitionForm.controls?.['date']?.touched">
-        <small *ngIf="competitionForm.controls?.['date']?.errors?.['required']" class="text-red-300">Date is
-          required.</small>
-      </div>
     </div>
     <div class="flex gap-3">
       <div class="w-full">
@@ -70,7 +66,7 @@
         class="p-button-label">Cancel
       </span>
     </button>
-    <button (click)="onSubmit()" [disabled]="!competitionForm.valid"
+    <button (click)="onSubmit()" [disabled]="competitionForm.invalid"
             class="p-element p-ripple p-button-rounded p-button p-component">
       <span
         class="p-button-label">Submit

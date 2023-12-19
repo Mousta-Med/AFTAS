@@ -21,6 +21,12 @@ export class CompetitionService {
   findAll(): Observable<CompetitionDto[]>{
     return this.http.get<CompetitionDto[]>(this.competitionUrl);
   }
+  findAllPaginated(page: number, size: number): Observable<any>{
+    return this.http.get<any>(`${this.competitionUrl}/paginated?page=${page}&size=${size}`);
+  }
+  findAllFilteredAndPaginated(filter: string, page: number, size: number): Observable<any>{
+    return this.http.get<any>(`${this.competitionUrl}/filtered?filter=${filter}&page=${page}&size=${size}`);
+  }
 
   find(id: string): Observable<CompetitionDto>{
     return this.http.get<CompetitionDto>(`${this.competitionUrl}/${id}`);

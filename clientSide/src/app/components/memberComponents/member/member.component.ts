@@ -76,6 +76,8 @@ export class MemberComponent implements OnInit {
               this.messageService.add({
                 severity: 'success', summary: 'Member deleted', detail: `Member was successfully deleted`
               });
+            },error:(err) =>{
+              console.log(err);
             }
           });
       }

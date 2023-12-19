@@ -1,4 +1,5 @@
-<div class="flex justify-content-between align-items-center px-5 surface-0 border-bottom-1 surface-border relative lg:static"
+<div
+  class="flex justify-content-between align-items-center px-5 surface-0 border-bottom-1 surface-border relative lg:static"
   style="height: 60px;">
 </div>
 <div class="flex flex-column flex-auto">
@@ -7,85 +8,69 @@
       <div class="col-12 lg:col-6 xl:col-3">
         <div class="surface-card shadow-2 p-3 border-1 border-50 border-round">
           <div class="flex justify-content-between mb-3">
-            <div><span class="block text-500 font-medium mb-3">Orders</span>
-              <div class="text-900 font-medium text-xl">152</div>
+            <div><span class="block text-500 font-medium mb-3">Members</span>
+              <div class="text-900 font-medium text-xl">{{ memberLength }}</div>
             </div>
             <div
               class="flex align-items-center justify-content-center bg-blue-100 border-round"
-              style="width: 2.5rem; height: 2.5rem;"><i
-              class="pi pi-shopping-cart text-blue-500 text-xl"></i></div>
+              style="width: 2.5rem; height: 2.5rem;">
+              <i class="pi pi-user text-blue-500 text-xl"></i></div>
           </div>
-          <span class="text-green-500 font-medium">24 new </span><span
-          class="text-500">since last visit</span></div>
+          <span class="text-green-500 font-medium">Total Members</span>
+        </div>
       </div>
       <div class="col-12 lg:col-6 xl:col-3">
         <div class="surface-card shadow-2 p-3 border-1 border-50 border-round">
           <div class="flex justify-content-between mb-3">
-            <div><span class="block text-500 font-medium mb-3">Revenue</span>
-              <div class="text-900 font-medium text-xl">$2.100</div>
+            <div><span class="block text-500 font-medium mb-3">Competitions</span>
+              <div class="text-900 font-medium text-xl">{{competitionLength}}</div>
             </div>
             <div
               class="flex align-items-center justify-content-center bg-orange-100 border-round"
-              style="width: 2.5rem; height: 2.5rem;"><i
-              class="pi pi-map-marker text-orange-500 text-xl"></i></div>
+              style="width: 2.5rem; height: 2.5rem;">
+              <i class="pi pi-stopwatch text-orange-500 text-xl"></i></div>
           </div>
-          <span class="text-green-500 font-medium">%52+ </span><span
-          class="text-500">since last week</span></div>
+          <span class="text-green-500 font-medium">Total Competitions</span>
+        </div>
       </div>
       <div class="col-12 lg:col-6 xl:col-3">
         <div class="surface-card shadow-2 p-3 border-1 border-50 border-round">
           <div class="flex justify-content-between mb-3">
-            <div><span class="block text-500 font-medium mb-3">Customers</span>
-              <div class="text-900 font-medium text-xl">28441</div>
+            <div><span class="block text-500 font-medium mb-3">Fishes</span>
+              <div class="text-900 font-medium text-xl">{{ fishLength }}</div>
             </div>
             <div
               class="flex align-items-center justify-content-center bg-cyan-100 border-round"
-              style="width: 2.5rem; height: 2.5rem;"><i
-              class="pi pi-inbox text-cyan-500 text-xl"></i></div>
+              style="width: 2.5rem; height: 2.5rem;">
+              <img alt="icon" height="20" width="20" src="https://cdn-icons-png.flaticon.com/512/1691/1691086.png?ga=GA1.1.1662410716.1702912740">
+            </div>
           </div>
-          <span class="text-green-500 font-medium">520 </span><span
-          class="text-500">newly registered</span></div>
+          <span class="text-green-500 font-medium">Total Fishes</span>
+        </div>
       </div>
       <div class="col-12 lg:col-6 xl:col-3">
         <div class="surface-card shadow-2 p-3 border-1 border-50 border-round">
           <div class="flex justify-content-between mb-3">
-            <div><span class="block text-500 font-medium mb-3">Comments</span>
-              <div class="text-900 font-medium text-xl">152 Unread</div>
+            <div><span class="block text-500 font-medium mb-3">Hunts</span>
+              <div class="text-900 font-medium text-xl">{{ huntingLength }}</div>
             </div>
             <div
               class="flex align-items-center justify-content-center bg-purple-100 border-round"
-              style="width: 2.5rem; height: 2.5rem;"><i
-              class="pi pi-comment text-purple-500 text-xl"></i></div>
+              style="width: 2.5rem; height: 2.5rem;">
+              <img alt="icon" height="20" width="20" src="https://cdn-icons-png.flaticon.com/512/5145/5145084.png?ga=GA1.1.1662410716.1702912740">
+            </div>
           </div>
-          <span class="text-green-500 font-medium">85 </span><span class="text-500">responded</span>
+          <span class="text-green-500 font-medium">Total Hunts In Competitions</span>
         </div>
       </div>
       <div class="col-12 xl:col-6">
         <div class="surface-card shadow-2 border-round p-4">
-          <div class="text-xl text-900 font-medium mb-5">Latest News</div>
+          <div class="text-xl text-900 font-medium mb-5">Latest Competitions</div>
           <ul class="list-none p-0 m-0">
-            <li class="pb-3 border-bottom-1 surface-border">
-              <div class="font-medium text-900 mb-2">Aenean euismod elementum</div>
-              <div class="line-height-3 text-600" style="max-width: 30rem;">Vitae
-                turpis massa sed elementum tempus egestas sed sed risus. In metus vulputate eu
-                scelerisque felis imperdiet proin.
-              </div>
-            </li>
-            <li class="py-3 border-bottom-1 surface-border">
-              <div class="font-medium text-900 mb-2">In iaculis nunc sed augue
-                lacus
-              </div>
-              <div class="line-height-3 text-600" style="max-width: 30rem;">Viverra
-                vitae congue. Nisi scelerisque eu ultrices vitae auctor eu augue ut lectus. Elementum eu
-                facilisis sed odio morbi.
-              </div>
-            </li>
-            <li class="py-3 border-bottom-1 surface-border">
-              <div class="font-medium text-900 mb-2">Proin sagittis nisl rhoncus
-              </div>
-              <div class="line-height-3 text-600" style="max-width: 30rem;">In
-                pellentesque massa placerat duis ultricies lacus. Ac feugiat sed lectus vestibulum
-                mattis ullamcorper.
+            <li *ngFor="let competition of competitions" class="pb-3 mb-1 border-bottom-1 surface-border">
+              <div class="font-medium text-900 mb-2">{{competition.location}}</div>
+              <div class="line-height-3 text-600" style="max-width: 30rem;">
+                Date: {{competition.date}} | Participants: {{competition.numberOfParticipants}} | Amount: {{competition.amount}}
               </div>
             </li>
           </ul>
@@ -93,145 +78,15 @@
       </div>
       <div class="col-12 xl:col-6">
         <div class="surface-card shadow-2 border-round p-4">
-            <div class="text-xl text-900 font-medium mb-5">Team Members</div>
+          <div class="text-xl text-900 font-medium mb-5">Last Members</div>
           <ul class="list-none p-0 m-0">
-            <li
+            <li *ngFor="let member of members"
               class="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
-              <div class="flex"><img
-                class="mr-3" src=""
-                style="width: 45px; height: 45px;">
+              <div class="flex">
                 <div><span
-                  class="block text-900 font-medium mb-1">Janette Hudson</span>
-                  <div class="text-600">UI/UX Designer</div>
+                  class="block text-900 font-medium mb-1">{{ member.name }} {{ member.familyName }}</span>
+                  <div class="text-600">{{member.nationality}}</div>
                 </div>
-              </div>
-              <div class="mt-2 md:mt-0 flex flex-nowrap">
-                <button
-                  class="p-element p-ripple p-button-text p-button-plain p-button-rounded mr-1 p-button p-component p-button-icon-only"
-                >
-                  <span aria-hidden="true" class="p-button-icon pi pi-twitter"></span><span
-                  class="p-ink"></span></button>
-                <button
-                  class="p-element p-ripple p-button-text p-button-plain p-button-rounded mr-1 p-button p-component p-button-icon-only"
-                >
-                  <span aria-hidden="true" class="p-button-icon pi pi-github"></span><span
-                  class="p-ink"></span></button>
-                <button
-                  class="p-element p-ripple p-button-text p-button-plain p-button-rounded mr-1 p-button p-component p-button-icon-only"
-                >
-                  <span aria-hidden="true" class="p-button-icon pi pi-facebook"></span><span
-                  class="p-ink"></span></button>
-              </div>
-            </li>
-            <li
-              class="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
-              <div class="flex"><img
-                class="mr-3" src=""
-                style="width: 45px; height: 45px;">
-                <div><span class="block text-900 font-medium mb-1">Theresa Webb Hudson</span>
-                  <div class="text-600">UI/UX Designer</div>
-                </div>
-              </div>
-              <div class="mt-2 md:mt-0 flex flex-nowrap">
-                <button
-                  class="p-element p-ripple p-button-text p-button-plain p-button-rounded mr-1 p-button p-component p-button-icon-only"
-                >
-                  <span aria-hidden="true" class="p-button-icon pi pi-twitter"></span><span
-                  class="p-ink"></span></button>
-                <button
-                  class="p-element p-ripple p-button-text p-button-plain p-button-rounded mr-1 p-button p-component p-button-icon-only"
-                >
-                  <span aria-hidden="true" class="p-button-icon pi pi-github"></span><span
-                  class="p-ink"></span></button>
-                <button
-                  class="p-element p-ripple p-button-text p-button-plain p-button-rounded mr-1 p-button p-component p-button-icon-only"
-                >
-                  <span aria-hidden="true" class="p-button-icon pi pi-facebook"></span><span
-                  class="p-ink"></span></button>
-              </div>
-            </li>
-            <li
-              class="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
-              <div class="flex"><img
-                class="mr-3" src=""
-                style="width: 45px; height: 45px;">
-                <div><span
-                  class="block text-900 font-medium mb-1">Arlene McCoy</span>
-                  <div class="text-600">UI/UX Designer</div>
-                </div>
-              </div>
-              <div class="mt-2 md:mt-0 flex flex-nowrap">
-                <button
-                  class="p-element p-ripple p-button-text p-button-plain p-button-rounded mr-1 p-button p-component p-button-icon-only"
-                >
-                  <span aria-hidden="true" class="p-button-icon pi pi-twitter"></span><span
-                  class="p-ink"></span></button>
-                <button
-                  class="p-element p-ripple p-button-text p-button-plain p-button-rounded mr-1 p-button p-component p-button-icon-only"
-                >
-                  <span aria-hidden="true" class="p-button-icon pi pi-github"></span><span
-                  class="p-ink"></span></button>
-                <button
-                  class="p-element p-ripple p-button-text p-button-plain p-button-rounded mr-1 p-button p-component p-button-icon-only"
-                >
-                  <span aria-hidden="true" class="p-button-icon pi pi-facebook"></span><span
-                  class="p-ink"></span></button>
-              </div>
-            </li>
-            <li
-              class="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
-              <div class="flex"><img
-                class="mr-3" src=""
-                style="width: 45px; height: 45px;">
-                <div><span
-                  class="block text-900 font-medium mb-1">Jacob Jones</span>
-                  <div class="text-600">UI/UX Designer</div>
-                </div>
-              </div>
-              <div class="mt-2 md:mt-0 flex flex-nowrap">
-                <button
-                  class="p-element p-ripple p-button-text p-button-plain p-button-rounded mr-1 p-button p-component p-button-icon-only"
-                >
-                  <span aria-hidden="true" class="p-button-icon pi pi-twitter"></span><span
-                  class="p-ink"></span></button>
-                <button
-                  class="p-element p-ripple p-button-text p-button-plain p-button-rounded mr-1 p-button p-component p-button-icon-only"
-                >
-                  <span aria-hidden="true" class="p-button-icon pi pi-github"></span><span
-                  class="p-ink"></span></button>
-                <button
-                  class="p-element p-ripple p-button-text p-button-plain p-button-rounded mr-1 p-button p-component p-button-icon-only"
-                >
-                  <span aria-hidden="true" class="p-button-icon pi pi-facebook"></span><span
-                  class="p-ink"></span></button>
-              </div>
-            </li>
-            <li
-              class="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
-              <div class="flex"><img
-                class="mr-3" src=""
-                style="width: 45px; height: 45px;">
-                <div><span
-                  class="block text-900 font-medium mb-1">James Cooper</span>
-                  <div class="text-600">UI/UX Designer</div>
-                </div>
-              </div>
-              <div class="mt-2 md:mt-0 flex flex-nowrap">
-                <button
-                  class="p-element p-ripple p-button-text p-button-plain p-button-rounded mr-1 p-button p-component p-button-icon-only"
-                >
-                  <span aria-hidden="true" class="p-button-icon pi pi-twitter"></span><span
-                  class="p-ink"></span></button>
-                <button
-                  class="p-element p-ripple p-button-text p-button-plain p-button-rounded mr-1 p-button p-component p-button-icon-only"
-                >
-                  <span aria-hidden="true" class="p-button-icon pi pi-github"></span><span
-                  class="p-ink"></span></button>
-                <button
-                  class="p-element p-ripple p-button-text p-button-plain p-button-rounded mr-1 p-button p-component p-button-icon-only"
-                >
-                  <span aria-hidden="true" class="p-button-icon pi pi-facebook"></span><span
-                  class="p-ink"></span></button>
               </div>
             </li>
           </ul>

@@ -25,19 +25,20 @@ export class ManageMemberComponent implements OnChanges{
     familyName:  new FormControl('',[Validators.required]),
     accessionDate:  new FormControl('',[Validators.required]),
     nationality:  new FormControl('', [Validators.required]),
-    identityDocument:  new FormControl('null', [Validators.required]),
+    identityDocument:  new FormControl('nu', [Validators.required, Validators.minLength(3)]),
     identityNumber:  new FormControl('0',[Validators.required]),
   });
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.memberForm.reset();
     if (this.member){
-      this.memberForm = new FormGroup({
-        name: new FormControl(this.member.name),
-        familyName:  new FormControl(this.member.familyName),
-        accessionDate:  new FormControl(this.member.accessionDate),
-        nationality:  new FormControl(this.member.nationality),
-        identityDocument:  new FormControl(this.member.identityDocument),
-        identityNumber:  new FormControl(this.member.identityNumber),
+      this.memberForm.setValue({
+        name: this.member.name,
+        familyName: this.member.familyName,
+        accessionDate: this.member.accessionDate,
+        nationality: this.member.nationality,
+        identityDocument: this.member.identityDocument,
+        identityNumber: this.member.identityNumber,
       });
     }
   }
@@ -45,9 +46,11 @@ export class ManageMemberComponent implements OnChanges{
   onSubmit() {
     this.member = this.memberForm.value;
     this.submit.emit(this.member);
+    this.memberForm.reset();
   }
 
   onCancel() {
     this.cancel.emit();
+    this.memberForm.reset();
   }
 }

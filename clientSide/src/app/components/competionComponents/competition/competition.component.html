@@ -21,7 +21,8 @@
       <p-button (click)="createCompetition()" icon="pi pi-plus" label="Add Competition" size="small"
                 styleClass="p-button-success"></p-button>
     </div>
-    <p-selectButton [options]="filterOptions" [(ngModel)]="value" optionLabel="name" optionValue="value"></p-selectButton>
+    <p-selectButton (onChange)="filterChanged()" [(ngModel)]="filter" [options]="filterOptions" optionLabel="name"
+                    optionValue="value"></p-selectButton>
   </div>
 </div>
 <div *ngIf="length === 0" class="flex justify-content-center align-items-center h-full">
@@ -41,7 +42,14 @@
     </div>
   </div>
   <div class="">
-  <p-paginator *ngIf="length > 0" (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="length" [rowsPerPageOptions]="[10, 20, 30]"></p-paginator>
+    <p-paginator (onPageChange)="onPageChange($event)"
+                 [first]="first"
+                 [rowsPerPageOptions]="[4, 8, 16]"
+                 [rows]="rows"
+                 [showCurrentPageReport]="true"
+                 [totalRecords]="length"
+                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    ></p-paginator>
   </div>
 </div>
 

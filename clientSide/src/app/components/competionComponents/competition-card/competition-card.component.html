@@ -22,15 +22,15 @@
         class="text-900 font-medium text-sm">{{competition.numberOfParticipants}}</span></li>
     </ul>
 
-    <div class="flex justify-content-between mt-2">
-      <button (click)="onUpdate()" class="p-element p-ripple p-button-rounded p-button-text p-button p-component p-button-icon-only" >
-        <span aria-hidden="true" class="p-button-icon pi pi-pencil"></span>
+    <div class="flex justify-content-center mt-2">
+<!--      <button (click)="onUpdate()" class="p-element p-ripple p-button-rounded p-button-text p-button p-component p-button-icon-only" >-->
+<!--        <span aria-hidden="true" class="p-button-icon pi pi-pencil"></span>-->
+<!--      </button>-->
+      <button (click)="enter()" class="p-element p-ripple p-button-rounded p-button-text p-button p-component p-button-icon-only" >
+        <span aria-hidden="true" class="p-button-icon pi pi-eye"></span>
       </button>
       <button (click)="onDelete()" class="p-element p-ripple p-button-rounded p-button-text p-button p-component p-button-icon-only" >
         <span aria-hidden="true" class="p-button-icon pi pi-trash"></span>
-      </button>
-      <button (click)="enter()" class="p-element p-ripple p-button-rounded p-button-text p-button p-component p-button-icon-only" >
-        <span aria-hidden="true" class="p-button-icon pi pi-eye"></span>
       </button>
     </div>
 

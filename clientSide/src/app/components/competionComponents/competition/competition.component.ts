@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CompetitionDto} from "../../../models/competition-dto.model";
 import {CompetitionService} from "../../../services/competition/competition.service";
 import {ConfirmationService, MessageService} from "primeng/api";
@@ -23,35 +23,43 @@ export class CompetitionComponent implements OnInit {
 
   first: number = 0;
 
-  rows: number = 10;
+  page: number = 0;
 
-  onPageChange(event: any) {
-    this.first = event.first;
-    this.rows = event.rows;
-  }
+  rows: number = 4;
 
-  value: any;
+  filter: string = 'null';
 
   filterOptions: any[] = [
-    { icon: 'pi pi-check', value: 'passed', name: 'Passed' },
-    { icon: 'pi pi-play', value: 'ongoing', name: 'On Going' },
-    { icon: 'pi pi-calendar', value: 'upcoming', name: 'Upcoming' }
+    {icon: 'pi pi-check', value: 'passed', name: 'Passed'},
+    {icon: 'pi pi-play', value: 'ongoing', name: 'On Going'},
+    {icon: 'pi pi-calendar', value: 'upcoming', name: 'Upcoming'}
   ];
 
   constructor(private competitionService: CompetitionService, private confirmationService: ConfirmationService, private messageService: MessageService) {
+  }
+
+  filterChanged(){
+    this.findAllCompetitions();
+  }
+
+
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.page = event.page;
+    this.rows = event.rows;
+    this.findAllCompetitions();
   }
 
   ngOnInit() {
     this.findAllCompetitions();
   }
 
-
   findAllCompetitions() {
-    this.competitionService.findAll()
+    this.competitionService.findAllFilteredAndPaginated(this.filter,this.page, this.rows)
       .subscribe({
         next: (data) => {
-          this.competitions = data;
-          this.length = this.competitions.length;
+          this.competitions = data.content;
+          this.length = data.totalElements;
         }
       });
   }
@@ -63,7 +71,11 @@ export class CompetitionComponent implements OnInit {
           .subscribe({
             next: () => {
               this.findAllCompetitions();
-              this.messageService.add({severity: 'success', summary: 'Success', detail: 'Competition Created Successfully'});
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Competition Created Successfully'
+              });
               this.competition = {
                 code: '',
                 location: '',
@@ -73,6 +85,13 @@ export class CompetitionComponent implements OnInit {
                 numberOfParticipants: 0,
                 amount: 0
               };
+            }, error: (err) => {
+              console.log(err)
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: err.error?.error || err.error?.code
+              });
             }
           });
       } else if (this.operation === 'update') {
@@ -80,7 +99,11 @@ export class CompetitionComponent implements OnInit {
           .subscribe({
             next: () => {
               this.findAllCompetitions();
-              this.messageService.add({severity: 'success', summary: 'Success', detail: 'Competition Updated Successfully'});
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Competition Updated Successfully'
+              });
             }
           });
       }
@@ -96,6 +119,10 @@ export class CompetitionComponent implements OnInit {
         this.competitionService.delete(competition.code)
           .subscribe({
             next: () => {
+              if(this.competitions.length === 0){
+                this.first = 0
+                this.page = 0
+              }
               this.findAllCompetitions();
               this.messageService.add({
                 severity: 'success', summary: 'Competition deleted', detail: `Competition was successfully deleted`

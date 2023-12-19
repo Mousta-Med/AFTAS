@@ -203,7 +203,6 @@ export class CompetitionInfoComponent implements OnInit {
   }
 
   createPodium() {
-    this.setupRanking();
     this.podiumVisible = true;
   }
 

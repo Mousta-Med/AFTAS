@@ -39,6 +39,8 @@ export class CompetitionComponent implements OnInit {
   }
 
   filterChanged(){
+    this.first = 0;
+    this.page = 0;
     this.findAllCompetitions();
   }
 

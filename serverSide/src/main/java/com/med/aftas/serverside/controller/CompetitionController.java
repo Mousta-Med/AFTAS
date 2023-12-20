@@ -33,6 +33,7 @@ public class CompetitionController {
         PageRequest pageable = PageRequest.of(page, size);
         return ResponseEntity.ok(competitionServiceImpl.findWithPagination(pageable));
     }
+
     @GetMapping("/filtered")
     public ResponseEntity<Page<CompetitionRespDto>> getFilteredCompetitions(
             @RequestParam(name = "filter", defaultValue = "null") String filter,
@@ -40,7 +41,7 @@ public class CompetitionController {
             @RequestParam(name = "size", defaultValue = "10") Integer size
     ) {
         PageRequest pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(competitionServiceImpl.getFilteredCompetitions(filter,pageable));
+        return ResponseEntity.ok(competitionServiceImpl.getFilteredCompetitions(filter, pageable));
     }
 
     @GetMapping("/date")

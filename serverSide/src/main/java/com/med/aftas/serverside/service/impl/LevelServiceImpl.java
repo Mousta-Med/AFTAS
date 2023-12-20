@@ -31,15 +31,15 @@ public class LevelServiceImpl implements LevelService {
         Optional<Level> before = levelRepository.findTopByCodeLessThanOrderByCodeDesc(levelDto.getCode());
         Optional<Level> after = levelRepository.findTopByCodeGreaterThanOrderByCodeDesc(levelDto.getCode());
         Optional<Level> levelOptional = levelRepository.findById(levelDto.getCode());
-        if (levelOptional.isPresent()){
+        if (levelOptional.isPresent()) {
             throw new ResourceNotFoundException("Level Already Exist");
-        }else if (before.isPresent()){
+        } else if (before.isPresent()) {
             Level lastLevel = before.get();
             if (lastLevel.getPoints() >= levelDto.getPoints()) {
                 throw new PointsValidationException("A level with a lower points cannot be inserted");
             }
         }
-        if (after.isPresent()){
+        if (after.isPresent()) {
             Level firstLevel = after.get();
             if (firstLevel.getPoints() <= levelDto.getPoints()) {
                 throw new PointsValidationException("A level with a Higher points cannot be inserted");

@@ -3,6 +3,7 @@ package com.med.aftas.serverside.model;
 import com.med.aftas.serverside.enums.IdentityDocumentType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 public class Member {
 
     @Id

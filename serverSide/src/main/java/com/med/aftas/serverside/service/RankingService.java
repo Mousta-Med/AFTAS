@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface RankingService extends BaseService<RankingDto, RankingId, RankingRespDto> {
     List<RankingRespDto> SetUpCompetitionRankings(String competitionCode);
+
     List<RankingRespDto> findWithCompetitionCode(String competitionCode);
 }

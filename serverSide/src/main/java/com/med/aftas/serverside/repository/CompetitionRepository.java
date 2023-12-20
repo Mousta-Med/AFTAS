@@ -13,7 +13,10 @@ import java.util.List;
 public interface CompetitionRepository extends JpaRepository<Competition, String> {
 
     List<Competition> findCompetitionByDate(LocalDate date);
+
     Page<Competition> findCompetitionsByDate(LocalDate date, Pageable pageable);
+
     Page<Competition> findCompetitionsByDateBefore(LocalDate date, Pageable pageable);
+
     Page<Competition> findCompetitionsByDateAfter(LocalDate date, Pageable pageable);
 }

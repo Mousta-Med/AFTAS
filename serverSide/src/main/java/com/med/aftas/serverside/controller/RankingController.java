@@ -23,6 +23,7 @@ public class RankingController {
     public ResponseEntity<List<RankingRespDto>> findAllRankings() {
         return ResponseEntity.ok(rankingServiceImpl.findAll());
     }
+
     @GetMapping("/{competitionCode}")
     public ResponseEntity<List<RankingRespDto>> findRankingsByCompetitionCod(@PathVariable String competitionCode) {
         return ResponseEntity.ok(rankingServiceImpl.findWithCompetitionCode(competitionCode));

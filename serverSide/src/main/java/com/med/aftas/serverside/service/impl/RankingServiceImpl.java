@@ -51,7 +51,7 @@ public class RankingServiceImpl implements RankingService {
     public RankingRespDto save(RankingDto rankingDto) {
         RankingId rankingId = new RankingId(rankingDto.getMemberNum(), rankingDto.getCompetitionCode());
         Optional<Ranking> rankingOptional = rankingRepository.findById(rankingId);
-        if (rankingOptional.isPresent()){
+        if (rankingOptional.isPresent()) {
             throw new ResourceNotFoundException("Ranking already exist");
         }
         Competition competition = competitionRepository.findById(rankingDto.getCompetitionCode()).orElseThrow(() -> new ResourceNotFoundException("Competition Not found"));
@@ -60,7 +60,7 @@ public class RankingServiceImpl implements RankingService {
         LocalDate startDate = competition.getDate();
         if (ChronoUnit.DAYS.between(currentDate, startDate) < 1) {
             throw new CompetitionDateValidationException("Registration for competitions is allowed from the announcement until 24 hours before the start.");
-        }else if(competition.getRankings().size() == competition.getNumberOfParticipants() ){
+        } else if (competition.getRankings().size() == competition.getNumberOfParticipants()) {
             throw new CompetitionDateValidationException("You Reach The Max Of Members In Competition");
         }
         Ranking ranking = modelMapper.map(rankingDto, Ranking.class);
@@ -104,6 +104,7 @@ public class RankingServiceImpl implements RankingService {
         Page<Ranking> rankingsPage = rankingRepository.findAll(pageable);
         return rankingsPage.map(ranking -> modelMapper.map(ranking, RankingRespDto.class));
     }
+
     @Override
     public List<RankingRespDto> findWithCompetitionCode(String code) {
         return rankingRepository.findRankingsByCompetitionCodeOrderByScoreDesc(code).stream().map(ranking -> modelMapper.map(ranking, RankingRespDto.class)).collect(Collectors.toList());
@@ -122,8 +123,9 @@ public class RankingServiceImpl implements RankingService {
                 .sum()));
         rankings.sort(Comparator.comparingInt(Ranking::getScore).reversed());
         int rank = 1;
-        for (Ranking ranking : rankings)
+        for (Ranking ranking : rankings) {
             ranking.setRank(rank++);
+        }
         return Arrays.asList(modelMapper.map(rankingRepository.saveAll(rankings), RankingRespDto[].class)
         );
     }

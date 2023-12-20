@@ -2,30 +2,45 @@ package com.med.aftas.serverside.service.impl;
 
 import com.med.aftas.serverside.dto.CompetitionDto;
 import com.med.aftas.serverside.dto.RankingDto;
-import com.med.aftas.serverside.model.Competition;
-import com.med.aftas.serverside.model.Hunting;
-import com.med.aftas.serverside.model.Member;
-import com.med.aftas.serverside.model.Ranking;
+import com.med.aftas.serverside.dto.respDto.RankingRespDto;
+import com.med.aftas.serverside.enums.IdentityDocumentType;
+import com.med.aftas.serverside.model.*;
+import com.med.aftas.serverside.repository.CompetitionRepository;
+import com.med.aftas.serverside.repository.HuntingRepository;
 import com.med.aftas.serverside.repository.RankingRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.*;
+
+
+@ExtendWith(MockitoExtension.class)
 class RankingServiceImplTest {
 
+    List<Ranking> currentRankings;
     @Mock
     private RankingRepository rankingRepository;
-    @Mock private ModelMapper modelMapper;
-    @Mock private HuntingServiceImpl huntingService;
-    @Mock private CompetitionServiceImpl competitionService;
-
+    @Mock
+    private CompetitionRepository competitionRepository;
+    @Mock
+    private HuntingRepository huntingRepository;
+    @Mock
+    private ModelMapper modelMapper;
     @InjectMocks
-    private RankingServiceImpl underTest;
-
+    private RankingServiceImpl rankingService;
     private Member member;
     private Competition competition;
     private Ranking ranking;
@@ -33,101 +48,77 @@ class RankingServiceImplTest {
     private CompetitionDto competitionDto;
     private Hunting hunting;
 
-//    @BeforeEach
-//    public void setUp() {
-//        member = Member.builder()
-//                .num(1)
-//                .name("ahmed")
-//                .accessionDate(LocalDate.now())
-//                .familyName("test")
-//                .identityDocument(IdentityDocumentType.CIN)
-//                .nationality("MA")
-//                .identityNumber("HH121093")
-//                .build();
-//        competition = Competition.builder()
-//                .code("Saf-12-12-23")
-//                .date(LocalDate.now())
-//                .startTime(LocalDateTime.now())
-//                .endTime(LocalDateTime.now())
-//                .amount(100.00)
-//                .location("Safi")
-//                .build();
-//
-//        hunting = Hunting.builder()
-//                .numberOfFish(1)
-//                .fish(Fish.builder()
-//                        .level(Level.builder()
-//                                .points(10)
-//                                .build()
-//                        ).build()
-//                )
-//                .build();
-//
-//        member = Member.builder()
-//                .num(1)
-//                .name("hamza")
-//                .familyName("essouli")
-//                .identityDocument(IdentityDocumentType.CIN)
-//                .identityNumber("HH28712")
-//                .accessionDate(LocalDate.now())
-//                .nationality("MA")
-//                .build();
-//        CompetitionMember id = CompetitionMember.builder()
-//                .memberNum(1)
-//                .competitionCode("Saf-12-12-23")
-//                .build();
-//        competitionDto = new CompetitionDto();
-//        competitionDto.setCode("Saf-12-12-23");
-//        competitionDto.setDate(LocalDate.now());
-//        competitionDto.setAmount(120.00);
-//        competitionDto.setStartTime(LocalDateTime.now());
-//        competitionDto.setEndTime(LocalDateTime.now());
-//
-//        ranking = Ranking.builder()
-//                .id(id)
-//                .score(0)
-//                .member(member)
-//                .competition(competition)
-//                .build();
-//        rankingDto = new RankingDto();
-//        rankingDto.setId(id);
-//        rankingDto.setScore(0);
-//        rankingDto.setCompetition(competitionDto);
-//    }
+    @BeforeEach
+    void setUp() {
 
-//    @Test
-//    public void underTestMethodShouldThrowsARunTimeExceptionWhenANotExistCompetitionCodePassed() {
-//        String competitionCode = "Not exist";
-//        given(competitionService.findByID(competitionCode)).willThrow(RuntimeException.class);
-//
-//        assertThatExceptionOfType(RuntimeException.class)
-//                .isThrownBy(() -> underTest.SetUpCompetitionRankings(competitionCode));
-//
-//        verify(competitionService).findByID(competitionCode);
-//    }
-//
-//    @Test
-//    public void underTestMethodShouldThrowsARunTimeExceptionWhenTheCompetitionDidNotStartYet() {
-//        var competition = competitionDto;
-//        competition.setStartTime(LocalDateTime.of(30, 1, 15, 0, 0));
-//        given(competitionService.findByID("code")).willReturn(competitionDto);
-//        assertThatExceptionOfType(RuntimeException.class)
-//                .isThrownBy(() -> underTest.SetUpCompetitionRankings("code"));
-//
-//        verify(competitionService).findByID("code");
-//    }
-//
-//    @Test
-//    public void underTestMethodShouldThrowsARunTimeExceptionWhenTheCompetitionHaveNoRankings() {
-//        var competition = competitionDto;
-//        competition.setRankings(Arrays.asList());
-//        given(competitionService.findByID("code")).willReturn(competitionDto);
-//        given(rankingRepository.findByCompetitionCode("code")).willReturn(Arrays.asList());
-//        assertThatExceptionOfType(RuntimeException.class)
-//                .isThrownBy(() -> underTest.SetUpCompetitionRankings("code"));
-//
-//        verify(competitionService).findByID("code");
-//        verify(rankingRepository).findByCompetitionCode("code");
-//    }
+        competition = new Competition();
+        competition.setCode("sao-20-12-23");
+        competition.setDate(LocalDate.now());
+        competition.setStartTime(LocalTime.now());
+        competition.setEndTime(LocalTime.of(23, 59, 59));
+        competition.setNumberOfParticipants(3);
+        competition.setLocation("saouira");
+        competition.setAmount(1000.0);
 
+
+        member = Member.builder()
+                .num(1)
+                .name("ahmed")
+                .familyName("test")
+                .identityDocument(IdentityDocumentType.CIN)
+                .identityNumber("HH121093")
+                .accessionDate(LocalDate.now())
+                .nationality("MA")
+                .build();
+
+        competition = Competition.builder()
+                .code("Saf-12-12-23")
+                .date(LocalDate.now())
+                .startTime(LocalTime.now())
+                .endTime(LocalTime.now())
+                .amount(100.00)
+                .location("Safi")
+                .build();
+
+        hunting = Hunting.builder()
+                .numberOfFish(1)
+                .fish(Fish.builder()
+                        .level(Level.builder()
+                                .points(10)
+                                .build()
+                        ).build()
+                )
+                .build();
+
+        RankingId id = RankingId.builder()
+                .competitionCode(competition.getCode())
+                .memberNum(member.getNum())
+                .build();
+
+        ranking = Ranking.builder()
+                .id(id)
+                .score(0)
+                .member(member)
+                .competition(competition).build();
+
+        currentRankings = new ArrayList<>();
+        currentRankings.add(new Ranking(id, 1, 0, member, competition));
+        currentRankings.add(new Ranking(id, 1, 0, member, competition));
+    }
+
+    @Test
+    void setUpCompetitionRankings() {
+        when(competitionRepository.findById(competition.getCode())).thenReturn(Optional.of(competition));
+        when(rankingRepository.findRankingsByCompetitionCode(competition.getCode())).thenReturn(currentRankings);
+        when(rankingRepository.save(any())).thenReturn(new Ranking());
+
+        List<RankingRespDto> podium = rankingService.SetUpCompetitionRankings(competition.getCode());
+
+        verify(competitionRepository).findById(competition.getCode());
+        verify(rankingRepository).findRankingsByCompetitionCode(competition.getCode());
+        verify(rankingRepository, times(currentRankings.size())).save(any());
+
+        assertNotNull(podium);
+        assertEquals(2, podium.size());
+    }
 }

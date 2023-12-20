@@ -1,6 +1,5 @@
 package com.med.aftas.serverside.dto;
 
-import com.med.aftas.serverside.model.RankingId;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

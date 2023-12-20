@@ -35,7 +35,7 @@ public class FishServiceImpl implements FishService {
     @Override
     public FishRespDto save(FishDto fishDto) {
         Optional<Fish> fishOptional = fishRepository.findById(fishDto.getName());
-        if (fishOptional.isPresent()){
+        if (fishOptional.isPresent()) {
             throw new ResourceNotFoundException("Fish already exist");
         }
         Level level = levelRepository.findById(fishDto.getLevelCode()).orElseThrow(() -> new ResourceNotFoundException("Level Not found"));

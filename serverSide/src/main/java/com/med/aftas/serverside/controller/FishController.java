@@ -2,7 +2,7 @@ package com.med.aftas.serverside.controller;
 
 import com.med.aftas.serverside.dto.FishDto;
 import com.med.aftas.serverside.dto.respDto.FishRespDto;
-import com.med.aftas.serverside.service.impl.FishServiceImpl;
+import com.med.aftas.serverside.service.FishService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -16,11 +16,11 @@ import java.util.List;
 public class FishController {
 
     @Autowired
-    private FishServiceImpl fishServiceImpl;
+    private FishService fishService;
 
     @GetMapping
     public ResponseEntity<List<FishRespDto>> findAllFishs() {
-        return ResponseEntity.ok(fishServiceImpl.findAll());
+        return ResponseEntity.ok(fishService.findAll());
     }
 
     @GetMapping("/paginated")
@@ -29,27 +29,27 @@ public class FishController {
             @RequestParam(name = "size", defaultValue = "10") int size
     ) {
         PageRequest pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(fishServiceImpl.findWithPagination(pageable).getContent());
+        return ResponseEntity.ok(fishService.findWithPagination(pageable).getContent());
     }
 
     @GetMapping("/{name}")
     public ResponseEntity<FishRespDto> findOneFish(@PathVariable String name) {
-        return ResponseEntity.ok(fishServiceImpl.findOne(name));
+        return ResponseEntity.ok(fishService.findOne(name));
     }
 
     @PostMapping
     public ResponseEntity<FishRespDto> saveFish(@RequestBody @Valid FishDto fishDto) {
-        return ResponseEntity.ok(fishServiceImpl.save(fishDto));
+        return ResponseEntity.ok(fishService.save(fishDto));
     }
 
     @PutMapping("/{name}")
     public ResponseEntity<FishRespDto> updateFish(@PathVariable String name, @RequestBody @Valid FishDto fishDto) {
-        return ResponseEntity.ok(fishServiceImpl.update(name, fishDto));
+        return ResponseEntity.ok(fishService.update(name, fishDto));
     }
 
     @DeleteMapping("/{name}")
     public ResponseEntity<Void> deleteFish(@PathVariable(name = "name") String name) {
-        fishServiceImpl.delete(name);
+        fishService.delete(name);
         return ResponseEntity.noContent().build();
     }
 }

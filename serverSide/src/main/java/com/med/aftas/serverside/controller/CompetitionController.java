@@ -2,7 +2,7 @@ package com.med.aftas.serverside.controller;
 
 import com.med.aftas.serverside.dto.CompetitionDto;
 import com.med.aftas.serverside.dto.respDto.CompetitionRespDto;
-import com.med.aftas.serverside.service.impl.CompetitionServiceImpl;
+import com.med.aftas.serverside.service.CompetitionService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,11 +18,11 @@ import java.util.List;
 public class CompetitionController {
 
     @Autowired
-    private CompetitionServiceImpl competitionServiceImpl;
+    private CompetitionService competitionService;
 
     @GetMapping
     public ResponseEntity<List<CompetitionRespDto>> findAllCompetitions() {
-        return ResponseEntity.ok(competitionServiceImpl.findAll());
+        return ResponseEntity.ok(competitionService.findAll());
     }
 
     @GetMapping("/paginated")
@@ -31,7 +31,7 @@ public class CompetitionController {
             @RequestParam(name = "size", defaultValue = "10") int size
     ) {
         PageRequest pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(competitionServiceImpl.findWithPagination(pageable));
+        return ResponseEntity.ok(competitionService.findWithPagination(pageable));
     }
 
     @GetMapping("/filtered")
@@ -41,32 +41,32 @@ public class CompetitionController {
             @RequestParam(name = "size", defaultValue = "10") Integer size
     ) {
         PageRequest pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(competitionServiceImpl.getFilteredCompetitions(filter, pageable));
+        return ResponseEntity.ok(competitionService.getFilteredCompetitions(filter, pageable));
     }
 
     @GetMapping("/date")
     public ResponseEntity<List<CompetitionRespDto>> getCompetitionsByDate(@RequestParam(name = "date") LocalDate date) {
-        return ResponseEntity.ok(competitionServiceImpl.findCompetitionsWithDate(date));
+        return ResponseEntity.ok(competitionService.findCompetitionsWithDate(date));
     }
 
     @GetMapping("/{code}")
     public ResponseEntity<CompetitionRespDto> findOneCompetition(@PathVariable String code) {
-        return ResponseEntity.ok(competitionServiceImpl.findOne(code));
+        return ResponseEntity.ok(competitionService.findOne(code));
     }
 
     @PostMapping
     public ResponseEntity<CompetitionRespDto> saveCompetition(@RequestBody @Valid CompetitionDto competitionDto) {
-        return ResponseEntity.ok(competitionServiceImpl.save(competitionDto));
+        return ResponseEntity.ok(competitionService.save(competitionDto));
     }
 
     @PutMapping("/{code}")
     public ResponseEntity<CompetitionRespDto> updateCompetition(@PathVariable String code, @RequestBody @Valid CompetitionDto competitionDto) {
-        return ResponseEntity.ok(competitionServiceImpl.update(code, competitionDto));
+        return ResponseEntity.ok(competitionService.update(code, competitionDto));
     }
 
     @DeleteMapping("/{code}")
     public ResponseEntity<Void> deleteCompetition(@PathVariable(name = "code") String code) {
-        competitionServiceImpl.delete(code);
+        competitionService.delete(code);
         return ResponseEntity.noContent().build();
     }
 }

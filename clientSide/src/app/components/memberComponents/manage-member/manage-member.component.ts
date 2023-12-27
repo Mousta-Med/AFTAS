@@ -25,7 +25,7 @@ export class ManageMemberComponent implements OnChanges{
     familyName:  new FormControl('',[Validators.required]),
     accessionDate:  new FormControl('',[Validators.required]),
     nationality:  new FormControl('', [Validators.required]),
-    identityDocument:  new FormControl('nu', [Validators.required, Validators.minLength(3)]),
+    identityDocument:  new FormControl('', [Validators.required, Validators.minLength(3)]),
     identityNumber:  new FormControl('0',[Validators.required]),
   });
 

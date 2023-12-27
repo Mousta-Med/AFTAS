@@ -2,7 +2,7 @@ package com.med.aftas.serverside.controller;
 
 import com.med.aftas.serverside.dto.MemberDto;
 import com.med.aftas.serverside.dto.respDto.MemberRespDto;
-import com.med.aftas.serverside.service.impl.MemberServiceImpl;
+import com.med.aftas.serverside.service.MemberService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -16,11 +16,11 @@ import java.util.List;
 public class MemberController {
 
     @Autowired
-    private MemberServiceImpl memberServiceImpl;
+    private MemberService memberService;
 
     @GetMapping
     public ResponseEntity<List<MemberRespDto>> findAllMembers() {
-        return ResponseEntity.ok(memberServiceImpl.findAll());
+        return ResponseEntity.ok(memberService.findAll());
     }
 
     @GetMapping("/paginated")
@@ -29,32 +29,32 @@ public class MemberController {
             @RequestParam(name = "size", defaultValue = "10") int size
     ) {
         PageRequest pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(memberServiceImpl.findWithPagination(pageable).getContent());
+        return ResponseEntity.ok(memberService.findWithPagination(pageable).getContent());
     }
 
     @GetMapping("/{num}")
     public ResponseEntity<MemberRespDto> findOneMember(@PathVariable Integer num) {
-        return ResponseEntity.ok(memberServiceImpl.findOne(num));
+        return ResponseEntity.ok(memberService.findOne(num));
     }
 
     @GetMapping("/search/{query}")
     public ResponseEntity<List<MemberRespDto>> findMemberByNameOrFamilyName(@PathVariable String query) {
-        return ResponseEntity.ok(memberServiceImpl.findByNameOrFamilyName(query));
+        return ResponseEntity.ok(memberService.findByNameOrFamilyName(query));
     }
 
     @PostMapping
     public ResponseEntity<MemberRespDto> saveMember(@RequestBody @Valid MemberDto memberDto) {
-        return ResponseEntity.ok(memberServiceImpl.save(memberDto));
+        return ResponseEntity.ok(memberService.save(memberDto));
     }
 
     @PutMapping("/{num}")
     public ResponseEntity<MemberRespDto> updateMember(@PathVariable Integer num, @RequestBody @Valid MemberDto memberDto) {
-        return ResponseEntity.ok(memberServiceImpl.update(num, memberDto));
+        return ResponseEntity.ok(memberService.update(num, memberDto));
     }
 
     @DeleteMapping("/{num}")
     public ResponseEntity<Void> deleteMember(@PathVariable(name = "num") Integer num) {
-        memberServiceImpl.delete(num);
+        memberService.delete(num);
         return ResponseEntity.noContent().build();
     }
 }

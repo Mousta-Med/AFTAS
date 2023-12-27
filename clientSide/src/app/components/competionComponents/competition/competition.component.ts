@@ -35,7 +35,10 @@ export class CompetitionComponent implements OnInit {
     {icon: 'pi pi-calendar', value: 'upcoming', name: 'Upcoming'}
   ];
 
-  constructor(private competitionService: CompetitionService, private confirmationService: ConfirmationService, private messageService: MessageService) {
+  constructor(
+    private competitionService: CompetitionService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService) {
   }
 
   filterChanged(){

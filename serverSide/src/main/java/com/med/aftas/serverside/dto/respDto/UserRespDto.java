@@ -1,9 +1,9 @@
-package com.med.aftas.serverside.model;
+package com.med.aftas.serverside.dto.respDto;
 
+import com.med.aftas.serverside.dto.HuntingDto;
+import com.med.aftas.serverside.dto.RankingDto;
 import com.med.aftas.serverside.enums.IdentityDocumentType;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,14 +11,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Builder
-public class Member {
+@NoArgsConstructor
+public class UserRespDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer num;
 
     private String name;
@@ -29,15 +25,11 @@ public class Member {
 
     private String nationality;
 
-    @Enumerated(EnumType.STRING)
     private IdentityDocumentType identityDocument;
 
-    @Column(unique = true)
     private String identityNumber;
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-    private List<Ranking> rankings;
+    private List<RankingDto> rankings;
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-    private List<Hunting> huntings;
+    private List<HuntingDto> huntings;
 }

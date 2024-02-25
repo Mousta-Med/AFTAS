@@ -41,7 +41,7 @@ class RankingServiceImplTest {
     private ModelMapper modelMapper;
     @InjectMocks
     private RankingServiceImpl rankingService;
-    private Member member;
+    private User user;
     private Competition competition;
     private Ranking ranking;
     private RankingDto rankingDto;
@@ -61,7 +61,7 @@ class RankingServiceImplTest {
         competition.setAmount(1000.0);
 
 
-        member = Member.builder()
+        user = User.builder()
                 .num(1)
                 .name("ahmed")
                 .familyName("test")
@@ -92,18 +92,18 @@ class RankingServiceImplTest {
 
         RankingId id = RankingId.builder()
                 .competitionCode(competition.getCode())
-                .memberNum(member.getNum())
+                .userNum(user.getNum())
                 .build();
 
         ranking = Ranking.builder()
                 .id(id)
                 .score(0)
-                .member(member)
+                .user(user)
                 .competition(competition).build();
 
         currentRankings = new ArrayList<>();
-        currentRankings.add(new Ranking(id, 1, 0, member, competition));
-        currentRankings.add(new Ranking(id, 1, 0, member, competition));
+        currentRankings.add(new Ranking(id, 1, 0, user, competition));
+        currentRankings.add(new Ranking(id, 1, 0, user, competition));
     }
 
     @Test

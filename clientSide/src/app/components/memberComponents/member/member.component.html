@@ -1,10 +1,10 @@
 <p-dialog [(visible)]="visible" [dismissableMask]="true" [draggable]="false" [modal]="true" [resizable]="false"
           [style]="{ width: '50vw' }" header="{{title}}">
-  <app-manage-member
+  <app-manage-user
     (cancel)="cancel()"
     (submit)="save($event)"
-    [member]="member"
-  ></app-manage-member>
+    [user]="user"
+  ></app-manage-user>
 </p-dialog>
 <p-toast></p-toast>
 <p-confirmDialog [style]="{width: '45vw'}"
@@ -31,10 +31,10 @@
   </div>
 </div>
 <div class="m-5">
-  <app-member-table
+  <app-user-table
     (delete)="deleteMember($event)"
     (update)="updateMember($event)"
     [members]="members"
-  ></app-member-table>
+  ></app-user-table>
 </div>
 

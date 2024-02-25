@@ -38,9 +38,9 @@ public class RankingController {
         return ResponseEntity.ok(rankingService.findWithPagination(pageable).getContent());
     }
 
-    @GetMapping("/{competitionCode}/{memberNum}")
-    public ResponseEntity<RankingRespDto> findOneRanking(@PathVariable String competitionCode, @PathVariable Integer memberNum) {
-        RankingId id = new RankingId(memberNum, competitionCode);
+    @GetMapping("/{competitionCode}/{userNum}")
+    public ResponseEntity<RankingRespDto> findOneRanking(@PathVariable String competitionCode, @PathVariable Integer userNum) {
+        RankingId id = new RankingId(userNum, competitionCode);
         return ResponseEntity.ok(rankingService.findOne(id));
     }
 
@@ -49,15 +49,15 @@ public class RankingController {
         return ResponseEntity.ok(rankingService.save(rankingDto));
     }
 
-    @PutMapping("/{competitionCode}/{memberNum}")
-    public ResponseEntity<RankingRespDto> updateRanking(@PathVariable String competitionCode, @PathVariable Integer memberNum, @RequestBody @Valid RankingDto rankingDto) {
-        RankingId id = new RankingId(memberNum, competitionCode);
+    @PutMapping("/{competitionCode}/{userNum}")
+    public ResponseEntity<RankingRespDto> updateRanking(@PathVariable String competitionCode, @PathVariable Integer userNum, @RequestBody @Valid RankingDto rankingDto) {
+        RankingId id = new RankingId(userNum, competitionCode);
         return ResponseEntity.ok(rankingService.update(id, rankingDto));
     }
 
-    @DeleteMapping("/{competitionCode}/{memberNum}")
-    public ResponseEntity<Void> deleteRanking(@PathVariable String competitionCode, @PathVariable Integer memberNum) {
-        RankingId id = new RankingId(memberNum, competitionCode);
+    @DeleteMapping("/{competitionCode}/{userNum}")
+    public ResponseEntity<Void> deleteRanking(@PathVariable String competitionCode, @PathVariable Integer userNum) {
+        RankingId id = new RankingId(userNum, competitionCode);
         rankingService.delete(id);
         return ResponseEntity.noContent().build();
     }

@@ -9,17 +9,17 @@
       <th>Actions</th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-member>
+  <ng-template pTemplate="body" let-user>
     <tr>
-      <td>{{ member.name }}</td>
-      <td>{{ member.familyName }}</td>
-      <td>{{ member.nationality }}</td>
-      <td>{{ member.identityDocument }}</td>
-      <td>{{ member.identityNumber }}</td>
+      <td>{{ user.name }}</td>
+      <td>{{ user.familyName }}</td>
+      <td>{{ user.nationality }}</td>
+      <td>{{ user.identityDocument }}</td>
+      <td>{{ user.identityNumber }}</td>
       <td>
-        <button (click)="onUpdate(member)" pButton pRipple type="button" icon="pi pi-pencil"
+        <button (click)="onUpdate(user)" pButton pRipple type="button" icon="pi pi-pencil"
                 class="p-button-rounded p-button-text"></button>
-        <button (click)="onDelete(member)" pButton pRipple type="button" icon="pi pi-trash"
+        <button (click)="onDelete(user)" pButton pRipple type="button" icon="pi pi-trash"
                 class="p-button-rounded p-button-danger p-button-text"></button>
       </td>
     </tr>

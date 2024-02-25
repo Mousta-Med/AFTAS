@@ -5,12 +5,12 @@ import com.med.aftas.serverside.dto.respDto.RankingRespDto;
 import com.med.aftas.serverside.exception.CompetitionDateValidationException;
 import com.med.aftas.serverside.exception.ResourceNotFoundException;
 import com.med.aftas.serverside.model.Competition;
-import com.med.aftas.serverside.model.Member;
+import com.med.aftas.serverside.model.User;
 import com.med.aftas.serverside.model.Ranking;
 import com.med.aftas.serverside.model.RankingId;
 import com.med.aftas.serverside.repository.CompetitionRepository;
 import com.med.aftas.serverside.repository.HuntingRepository;
-import com.med.aftas.serverside.repository.MemberRepository;
+import com.med.aftas.serverside.repository.UserRepository;
 import com.med.aftas.serverside.repository.RankingRepository;
 import com.med.aftas.serverside.service.RankingService;
 import org.modelmapper.ModelMapper;
@@ -38,7 +38,7 @@ public class RankingServiceImpl implements RankingService {
     private CompetitionRepository competitionRepository;
 
     @Autowired
-    private MemberRepository memberRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private HuntingRepository huntingRepository;
@@ -49,24 +49,24 @@ public class RankingServiceImpl implements RankingService {
 
     @Override
     public RankingRespDto save(RankingDto rankingDto) {
-        RankingId rankingId = new RankingId(rankingDto.getMemberNum(), rankingDto.getCompetitionCode());
+        RankingId rankingId = new RankingId(rankingDto.getUserNum(), rankingDto.getCompetitionCode());
         Optional<Ranking> rankingOptional = rankingRepository.findById(rankingId);
         if (rankingOptional.isPresent()) {
             throw new ResourceNotFoundException("Ranking already exist");
         }
         Competition competition = competitionRepository.findById(rankingDto.getCompetitionCode()).orElseThrow(() -> new ResourceNotFoundException("Competition Not found"));
-        Member member = memberRepository.findById(rankingDto.getMemberNum()).orElseThrow(() -> new ResourceNotFoundException("Member Not found"));
+        User user = userRepository.findById(rankingDto.getUserNum()).orElseThrow(() -> new ResourceNotFoundException("User Not found"));
         LocalDate currentDate = LocalDate.now();
         LocalDate startDate = competition.getDate();
         if (ChronoUnit.DAYS.between(currentDate, startDate) < 1) {
             throw new CompetitionDateValidationException("Registration for competitions is allowed from the announcement until 24 hours before the start.");
         } else if (competition.getRankings().size() == competition.getNumberOfParticipants()) {
-            throw new CompetitionDateValidationException("You Reach The Max Of Members In Competition");
+            throw new CompetitionDateValidationException("You Reach The Max Of Users In Competition");
         }
         Ranking ranking = modelMapper.map(rankingDto, Ranking.class);
         ranking.setId(rankingId);
         ranking.setCompetition(competition);
-        ranking.setMember(member);
+        ranking.setUser(user);
         return modelMapper.map(rankingRepository.save(ranking), RankingRespDto.class);
     }
 
@@ -79,12 +79,12 @@ public class RankingServiceImpl implements RankingService {
     @Override
     public RankingRespDto update(RankingId id, RankingDto rankingDto) {
         Competition competition = competitionRepository.findById(rankingDto.getCompetitionCode()).orElseThrow(() -> new ResourceNotFoundException("Competition Not found"));
-        Member member = memberRepository.findById(rankingDto.getMemberNum()).orElseThrow(() -> new ResourceNotFoundException("Member Not found"));
+        User user = userRepository.findById(rankingDto.getUserNum()).orElseThrow(() -> new ResourceNotFoundException("User Not found"));
         Ranking existingRanking = rankingRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Ranking Not found with this: " + id));
         BeanUtils.copyProperties(rankingDto, existingRanking);
         existingRanking.setId(id);
         existingRanking.setCompetition(competition);
-        existingRanking.setMember(member);
+        existingRanking.setUser(user);
         return modelMapper.map(rankingRepository.save(existingRanking), RankingRespDto.class);
     }
 
@@ -117,7 +117,7 @@ public class RankingServiceImpl implements RankingService {
         if (rankings.isEmpty()) {
             throw new ResourceNotFoundException("There is no Ranking in this competition");
         }
-        rankings.forEach(ranking -> ranking.setScore(huntingRepository.getHuntingsByCompetitionCodeAndMemberNum(competitionCode, ranking.getMember().getNum())
+        rankings.forEach(ranking -> ranking.setScore(huntingRepository.getHuntingsByCompetitionCodeAndUserNum(competitionCode, ranking.getUser().getNum())
                 .stream()
                 .mapToInt(hunt -> hunt.getNumberOfFish() * hunt.getFish().getLevel().getPoints())
                 .sum()));

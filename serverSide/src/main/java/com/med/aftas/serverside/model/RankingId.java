@@ -16,8 +16,8 @@ import java.io.Serializable;
 @Builder
 public class RankingId implements Serializable {
 
-    @Column(name = "member_num")
-    private Integer memberNum;
+    @Column(name = "user_num")
+    private Integer userNum;
 
     @Column(name = "competition_code")
     private String competitionCode;

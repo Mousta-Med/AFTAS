@@ -9,8 +9,8 @@ import java.util.Optional;
 
 @Repository
 public interface HuntingRepository extends JpaRepository<Hunting, Integer> {
-    Optional<Hunting> getHuntingByCompetitionCodeAndFishNameAndMemberNum(String competitionCode, String fishName, Integer memberNum);
+    Optional<Hunting> getHuntingByCompetitionCodeAndFishNameAndUserNum(String competitionCode, String fishName, Integer userNum);
 
-    List<Hunting> getHuntingsByCompetitionCodeAndMemberNum(String competitionCode, Integer memberNum);
+    List<Hunting> getHuntingsByCompetitionCodeAndUserNum(String competitionCode, Integer userNum);
 
 }

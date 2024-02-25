@@ -37,9 +37,9 @@ public class HuntingController {
         return ResponseEntity.ok(huntingService.findOne(id));
     }
 
-    @GetMapping("/{competitionCode}/{memberNum}")
-    public ResponseEntity<List<HuntingRespDto>> getHuntingsByCompetitionCodeAndMemberNum(@PathVariable String competitionCode, @PathVariable Integer memberNum) {
-        return ResponseEntity.ok(huntingService.getHuntingsByCompetitionCodeAndMemberNum(competitionCode, memberNum));
+    @GetMapping("/{competitionCode}/{userNum}")
+    public ResponseEntity<List<HuntingRespDto>> getHuntingsByCompetitionCodeAndUserNum(@PathVariable String competitionCode, @PathVariable Integer userNum) {
+        return ResponseEntity.ok(huntingService.getHuntingsByCompetitionCodeAndUserNum(competitionCode, userNum));
     }
 
     @PostMapping

@@ -18,9 +18,9 @@ public class RankingDto {
     @PositiveOrZero(message = "Score should not be negative")
     private Integer score;
 
-    @NotNull(message = "member num should not be null")
-    @Positive(message = "member num should not be 0 or negative")
-    private Integer memberNum;
+    @NotNull(message = "user num should not be null")
+    @Positive(message = "user num should not be 0 or negative")
+    private Integer userNum;
 
     @NotBlank(message = "competition code should not be blank")
     private String competitionCode;

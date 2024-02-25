@@ -1,6 +1,8 @@
 package com.med.aftas.serverside.dto;
 
 import com.med.aftas.serverside.enums.IdentityDocumentType;
+import com.med.aftas.serverside.enums.Role;
+import com.med.aftas.serverside.enums.Status;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -13,7 +15,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MemberDto {
+public class UserDto {
 
     private Integer num;
 
@@ -22,6 +24,16 @@ public class MemberDto {
 
     @NotBlank(message = "family Name should be not Empty")
     private String familyName;
+
+    @NotBlank(message = "username should be not Empty")
+    private String username;
+
+    @NotBlank(message = "password should be not Empty")
+    private String password;
+
+    private Role role;
+
+    private Status status;
 
     @NotNull(message = "accession Date should not be null")
     private LocalDate accessionDate;

@@ -23,10 +23,10 @@ public class Ranking {
     private Integer score;
 
     @ManyToOne
-    @MapsId("memberNum")
-    @JoinColumn(name = "member_num")
+    @MapsId("userNum")
+    @JoinColumn(name = "user_num")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Member member;
+    private User user;
 
     @ManyToOne
     @MapsId("competitionCode")

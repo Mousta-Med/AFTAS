@@ -39,10 +39,14 @@ import {SelectButtonModule} from "primeng/selectbutton";
 import {PaginatorModule} from "primeng/paginator";
 import { HuntingComponent } from './components/competionComponents/hunting/hunting.component';
 import { ManageHuntingComponent } from './components/competionComponents/manage-hunting/manage-hunting.component';
+import { LoginComponent } from './components/homeComponents/login/login.component';
+import { RegisterComponent } from './components/homeComponents/register/register.component';
+import {CheckboxModule} from "primeng/checkbox";
+import {MessageModule} from "primeng/message";
 
 @NgModule({
-  declarations: [AppComponent, PagenotfoundComponent, HomeComponent, DashboardComponent, MenuBarComponent, MenuItemComponent, MemberComponent, CompetitionComponent, MemberTableComponent, ManageMemberComponent, CompetitionCardComponent, ManageCompetitionComponent, CompetitionInfoComponent, RankingComponent, HuntingComponent, ManageHuntingComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule, MenuModule, FontAwesomeModule, MenubarModule, InputTextModule, RippleModule, ButtonModule, TableModule, SidebarModule, DialogModule, ToastModule, ConfirmDialogModule, FormsModule, ChipModule, DropdownModule, TagModule, TabMenuModule, SelectButtonModule, PaginatorModule],
+  declarations: [AppComponent, PagenotfoundComponent, HomeComponent, DashboardComponent, MenuBarComponent, MenuItemComponent, MemberComponent, CompetitionComponent, MemberTableComponent, ManageMemberComponent, CompetitionCardComponent, ManageCompetitionComponent, CompetitionInfoComponent, RankingComponent, HuntingComponent, ManageHuntingComponent, LoginComponent, RegisterComponent],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule, MenuModule, FontAwesomeModule, MenubarModule, InputTextModule, RippleModule, ButtonModule, TableModule, SidebarModule, DialogModule, ToastModule, ConfirmDialogModule, FormsModule, ChipModule, DropdownModule, TagModule, TabMenuModule, SelectButtonModule, PaginatorModule, CheckboxModule, MessageModule],
   providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent]
 })

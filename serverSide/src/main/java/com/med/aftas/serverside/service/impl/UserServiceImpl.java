@@ -1,12 +1,12 @@
 package com.med.aftas.serverside.service.impl;
 
 import com.med.aftas.serverside.dto.UserDto;
-import com.med.aftas.serverside.dto.UserLoginDto;
+import com.med.aftas.serverside.dto.AuthenticationRequest;
 import com.med.aftas.serverside.dto.respDto.UserRespDto;
 import com.med.aftas.serverside.enums.Status;
 import com.med.aftas.serverside.exception.ResourceNotFoundException;
 import com.med.aftas.serverside.jwt.JWTUtil;
-import com.med.aftas.serverside.model.AuthenticationResponse;
+import com.med.aftas.serverside.dto.respDto.AuthenticationResponse;
 import com.med.aftas.serverside.model.User;
 import com.med.aftas.serverside.repository.UserRepository;
 import com.med.aftas.serverside.service.UserService;
@@ -48,11 +48,11 @@ public class UserServiceImpl implements UserService {
         user.setStatus(Status.PENDING);
         user = userRepository.save(user);
         String token = jwtUtil.generateToken(user);
-         return new AuthenticationResponse(token);
+         return new AuthenticationResponse(token, modelMapper.map(user, UserRespDto.class));
     }
 
     @Override
-    public AuthenticationResponse login(UserLoginDto userDto){
+    public AuthenticationResponse login(AuthenticationRequest userDto){
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         userDto.getUsername(),
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
 
         User user = userRepository.findByUsername(userDto.getUsername()).orElseThrow(() -> new ResourceNotFoundException("User Not found with this: "));
         String token = jwtUtil.generateToken(user);
-        return new AuthenticationResponse(token);
+        return new AuthenticationResponse(token, modelMapper.map(user, UserRespDto.class));
     }
 
 
@@ -110,5 +110,13 @@ public class UserServiceImpl implements UserService {
     public List<UserRespDto> findByNameOrFamilyName(String query) {
         return userRepository.findUserByNameContainingIgnoreCaseOrFamilyNameContainingIgnoreCase(query, query)
                 .stream().map(user -> modelMapper.map(user, UserRespDto.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public String updateStatus(Integer userNum, String role) {
+         User exictingUser = userRepository.findById(userNum).orElseThrow(() -> new ResourceNotFoundException("User Not found with this: " + userNum));
+         exictingUser.setStatus(Status.valueOf(role));
+         userRepository.save(exictingUser);
+         return "Status Updated TO " + role + " Successfully";
     }
 }

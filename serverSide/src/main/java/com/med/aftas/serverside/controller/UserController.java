@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
+//    @PreAuthorize("hasAnyAuthority('ROLE_MANAGER')")
     public ResponseEntity<List<UserRespDto>> findAllUsers() {
         return ResponseEntity.ok(userService.findAll());
     }
@@ -50,6 +52,12 @@ public class UserController {
     @PutMapping("/{num}")
     public ResponseEntity<UserRespDto> updateUser(@PathVariable Integer num, @RequestBody @Valid UserDto userDto) {
         return ResponseEntity.ok(userService.update(num, userDto));
+    }
+
+    @PutMapping("/status/{num}")
+    @PreAuthorize("hasAnyAuthority('ROLE_MANAGER')")
+    public ResponseEntity<String> updateStatus(@PathVariable Integer num, @RequestParam(name = "role") String role) {
+        return ResponseEntity.ok(userService.updateStatus(num, role));
     }
 
     @DeleteMapping("/{num}")

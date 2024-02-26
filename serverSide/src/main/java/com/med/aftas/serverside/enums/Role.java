@@ -2,7 +2,7 @@ package com.med.aftas.serverside.enums;
 
 public enum Role {
 
-    MEMBER,
-
-    JURY
+    ROLE_MEMBER,
+    ROLE_MANAGER,
+    ROLE_JURY
 }

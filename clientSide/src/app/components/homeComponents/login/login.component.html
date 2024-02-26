@@ -1,0 +1,41 @@
+<div class="flex" style="min-height: 100vh">
+  <div class="surface-section w-full md:w-6 p-6 md:p-8 ">
+    <div class="mb-5"><img alt="Image" class="mb-3"
+                           height="50" src="https://maghreb.simplonline.co/_next/image?url=https%3A%2F%2Fsimplonline-v3-prod.s3.eu-west-3.amazonaws.com%2Fmedia%2Fimage%2Fjpg%2Fchasse-sous-marine-sous-eau-950002-169315-657215df5fd58614044589.jpg&w=1280&q=75">
+      <div class="text-900 text-3xl font-medium mb-3">Welcome Back</div>
+      <span class="text-600 font-medium mr-2">Don't have an account?</span><a
+        [href]="'/register'"
+        class="font-medium no-underline text-blue-500 cursor-pointer">Create today!</a></div>
+    <p-message *ngIf="errMsg" styleClass="mb-2 w-full" severity="error" [text]="errMsg"></p-message>
+    <div><label class="block text-900 font-medium mb-2" for="email2">UserName</label><input
+      [(ngModel)]="authenticationRequest.username"
+      class="p-inputtext p-component p-element w-full mb-3 p-3" id="email2" pinputtext=""
+      placeholder="UserName"
+      type="text"><label class="block text-900 font-medium mb-2"
+                         for="password2">Password</label><input
+      [(ngModel)]="authenticationRequest.password"
+      class="p-inputtext p-component p-element w-full mb-3 p-3" id="password2" pinputtext="" placeholder="Password"
+      type="password">
+      <div class="flex align-items-center justify-content-between mb-6">
+        <div class="flex align-items-center">
+          <p-checkbox class="p-element" id="rememberme2" styleclass="mr-2">
+            <div class="mr-2 p-checkbox p-component">
+              <div class="p-hidden-accessible"><input aria-checked="false" type="checkbox"
+                                                      value="undefined"></div>
+              <div class="p-checkbox-box"></div>
+            </div>
+          </p-checkbox>
+          <label for="rememberme2">Remember me</label></div>
+        <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Forgot password?</a>
+      </div>
+      <button class="p-element p-ripple w-full p-3 p-button p-component" icon="pi pi-user" label="Sign In"
+      (click)="login()"
+      ><span
+        aria-hidden="true" class="p-button-icon p-button-icon-left pi pi-user"></span><span
+        class="p-button-label">Sign In</span><span class="p-ink"></span></button>
+    </div>
+  </div>
+  <div
+    class="hidden md:block w-6 bg-no-repeat bg-cover bg-center"
+    style="background-image: url('https://wallpapercave.com/wp/wp8126030.jpg');"></div>
+</div>

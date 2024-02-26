@@ -6,6 +6,8 @@ import {DashboardComponent} from "./components/homeComponents/dashboard/dashboar
 import {CompetitionComponent} from "./components/competionComponents/competition/competition.component";
 import {MemberComponent} from "./components/memberComponents/member/member.component";
 import {CompetitionInfoComponent} from "./components/competionComponents/competition-info/competition-info.component";
+import {LoginComponent} from "./components/homeComponents/login/login.component";
+import {RegisterComponent} from "./components/homeComponents/register/register.component";
 
 const routes: Routes = [
   {
@@ -31,10 +33,19 @@ const routes: Routes = [
     ]
   },
   {
+    path: "login",
+    component: LoginComponent
+  }
+  ,
+  {
+    path: "register",
+    component: RegisterComponent
+  },
+  {
     path: "**",
     pathMatch: "full",
     component: PagenotfoundComponent
-  }
+  },
 ];
 
 @NgModule({

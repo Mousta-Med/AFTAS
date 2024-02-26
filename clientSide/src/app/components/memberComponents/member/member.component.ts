@@ -96,7 +96,7 @@ export class MemberComponent implements OnInit {
     this.title = 'New Member';
     this.operation = 'create';
     this.visible = true;
-    this.member = { name: '', familyName: '', identityDocument: 'CIN', identityNumber: '0', nationality: '', accessionDate: ''}
+    this.member = { name: '', familyName: '', identityDocument: 'CIN', identityNumber: '0', nationality: '', accessionDate: '', status: 'PENDING', role: 'ROLE_MEMBER'}
   }
 
   cancel() {

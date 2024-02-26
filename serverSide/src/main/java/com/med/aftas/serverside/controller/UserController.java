@@ -54,9 +54,9 @@ public class UserController {
         return ResponseEntity.ok(userService.update(num, userDto));
     }
 
-    @PutMapping("/status/{num}")
+    @PutMapping("/status")
     @PreAuthorize("hasAnyAuthority('ROLE_MANAGER')")
-    public ResponseEntity<String> updateStatus(@PathVariable Integer num, @RequestParam(name = "role") String role) {
+    public ResponseEntity<String> updateStatus(@RequestParam(name = "num") Integer num, @RequestParam(name = "role") String role) {
         return ResponseEntity.ok(userService.updateStatus(num, role));
     }
 

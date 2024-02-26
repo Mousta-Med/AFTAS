@@ -3,6 +3,7 @@ package com.med.aftas.serverside.service.impl;
 import com.med.aftas.serverside.dto.UserDto;
 import com.med.aftas.serverside.dto.AuthenticationRequest;
 import com.med.aftas.serverside.dto.respDto.UserRespDto;
+import com.med.aftas.serverside.enums.Role;
 import com.med.aftas.serverside.enums.Status;
 import com.med.aftas.serverside.exception.ResourceNotFoundException;
 import com.med.aftas.serverside.jwt.JWTUtil;
@@ -59,7 +60,6 @@ public class UserServiceImpl implements UserService {
                         userDto.getPassword()
                 )
         );
-
         User user = userRepository.findByUsername(userDto.getUsername()).orElseThrow(() -> new ResourceNotFoundException("User Not found with this: "));
         String token = jwtUtil.generateToken(user);
         return new AuthenticationResponse(token, modelMapper.map(user, UserRespDto.class));
@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserRespDto> findAll() {
-        return userRepository.findAll().stream().map(user -> modelMapper.map(user, UserRespDto.class)).collect(Collectors.toList());
+        return userRepository.findByRoleIsNot(Role.ROLE_MANAGER).stream().map(user -> modelMapper.map(user, UserRespDto.class)).collect(Collectors.toList());
     }
 
     @Override

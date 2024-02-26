@@ -21,7 +21,7 @@
       <p-button (click)="createCompetition()" icon="pi pi-plus" label="Add Competition" size="small"
                 styleClass="p-button-success"></p-button>
     </div>
-    <p-selectButton (onChange)="filterChanged()" [(ngModel)]="filter" [options]="filterOptions" optionLabel="name"
+    <p-selectButton styleClass="mt-1" (onChange)="filterChanged()" [(ngModel)]="filter" [options]="filterOptions" optionLabel="name"
                     optionValue="value"></p-selectButton>
   </div>
 </div>

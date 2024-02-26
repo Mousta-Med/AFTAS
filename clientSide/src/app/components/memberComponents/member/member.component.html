@@ -8,9 +8,8 @@
 </p-dialog>
 <p-toast></p-toast>
 <p-confirmDialog [style]="{width: '45vw'}"
-                 acceptButtonStyleClass="p-button-danger"
-                 acceptIcon="pi pi-trash"
-                 acceptLabel="Delete"
+                 acceptButtonStyleClass="p-button-success"
+                 acceptLabel="Submit"
                  rejectLabel="Cancel"></p-confirmDialog>
 <div
   class="px-5 surface-0 border-bottom-1 surface-border relative static"
@@ -20,7 +19,7 @@
       <p-button (click)="createMember()" icon="pi pi-plus" label="Add Member" size="small"
                 styleClass="p-button-success"></p-button>
     </div>
-    <div class="p-input-icon-right border-2 border-round border-gray-300">
+    <div class="p-input-icon-right border-2 border-round border-gray-300 mt-1">
       <i class="pi pi-search cursor-pointer"></i>
       <input
         (input)="findMember($event)"

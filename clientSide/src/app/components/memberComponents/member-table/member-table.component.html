@@ -3,6 +3,8 @@
     <tr>
       <th>Name</th>
       <th>Family Name</th>
+      <th>Role</th>
+      <th>Status</th>
       <th>Nationality</th>
       <th>Identity Type</th>
       <th>Identity Code</th>
@@ -13,13 +15,15 @@
     <tr>
       <td>{{ user.name }}</td>
       <td>{{ user.familyName }}</td>
+      <td>{{ user.role }}</td>
+      <td>{{ user.status }}</td>
       <td>{{ user.nationality }}</td>
       <td>{{ user.identityDocument }}</td>
       <td>{{ user.identityNumber }}</td>
       <td>
-        <button (click)="onUpdate(user)" pButton pRipple type="button" icon="pi pi-pencil"
+        <button (click)="onCheck(user.num)" pButton pRipple type="button" icon="pi pi-check"
                 class="p-button-rounded p-button-text"></button>
-        <button (click)="onDelete(user)" pButton pRipple type="button" icon="pi pi-trash"
+        <button (click)="onRefuse(user.num)" pButton pRipple type="button" icon="pi pi-times"
                 class="p-button-rounded p-button-danger p-button-text"></button>
       </td>
     </tr>

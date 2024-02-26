@@ -37,4 +37,10 @@ export class MemberService {
   delete(id: number | undefined): Observable<void>{
     return this.http.delete<void>(`${this.memberUrl}/${id}`);
   }
+
+  changeStatus(status: string, num: number): Observable<string>{
+    return this.http.put<string>(`${this.memberUrl}/status?num=${num}&role=${status}`, {});
+  }
+
+
 }

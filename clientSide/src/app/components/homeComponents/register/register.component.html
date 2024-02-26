@@ -1,23 +1,109 @@
 <div class="flex" style="min-height: 100vh">
   <div class="surface-section w-full md:w-6 p-6 md:p-8 ">
-    <div class="mb-5"><img alt="Image" class="mb-3"
-                           height="50" src="https://maghreb.simplonline.co/_next/image?url=https%3A%2F%2Fsimplonline-v3-prod.s3.eu-west-3.amazonaws.com%2Fmedia%2Fimage%2Fjpg%2Fchasse-sous-marine-sous-eau-950002-169315-657215df5fd58614044589.jpg&w=1280&q=75">
-      <div class="text-900 text-3xl font-medium mb-3">Welcome</div>
-      <span class="text-600 font-medium mr-2">Already have an account?</span><a
-        [href]="'/login'"
-        class="font-medium no-underline text-blue-500 cursor-pointer">Login!</a></div>
-    <div><label class="block text-900 font-medium mb-2" for="email2">Email</label><input
-      class="p-inputtext p-component p-element w-full mb-3 p-3" id="email2" pinputtext=""
-      placeholder="Email address"
-      type="text"><label class="block text-900 font-medium mb-2"
-                         for="password2">Password</label><input
-      class="p-inputtext p-component p-element w-full mb-3 p-3" id="password2" pinputtext="" placeholder="Password"
-      type="password">
-      <button class="p-element p-ripple w-full p-3 p-button p-component" icon="pi pi-user" label="Sign In"
-              pbutton=""
-              pripple=""><span
+    <div [formGroup]="registerForm" class="">
+      <div class="mb-5">
+        <div class="text-900 text-3xl font-medium mb-3 text-center">Welcome</div>
+        <span class="text-600 font-medium mr-2">Already have an account?</span><a
+          [href]="'/login'"
+          class="font-medium no-underline text-blue-500 cursor-pointer">Login!</a></div>
+      <p-message *ngIf="errMsg" [text]="errMsg" severity="error" styleClass="mb-2 w-full"></p-message>
+      <div class="flex flex-column gap-3 mt-3 ">
+        <div>
+          <label class="block mb-1 text-color text-base" for="date">UserName</label>
+          <span class="p-input-icon-left w-full">
+                <i class="pi pi-user"></i>
+                <input class="p-inputtext p-component p-element w-full" formControlName="username" id="date"
+                       placeholder="Enter A Username" type="text">
+                </span>
+        </div>
+        <div>
+          <label class="block mb-1 text-color text-base" for="date">Password</label>
+          <span class="p-input-icon-left w-full">
+                <i class="pi pi-user"></i>
+                <input class="p-inputtext p-component p-element w-full" formControlName="password" id="password"
+                       placeholder="Enter New Password" type="text">
+                </span>
+        </div>
+        <div class="flex gap-3">
+          <div class="w-full">
+            <label class="block mb-1 text-color text-base" for="name">First Name</label>
+            <span
+              class="p-input-icon-left w-full">
+          <i class="pi pi-user"></i>
+          <input class="p-inputtext p-component p-element w-full" formControlName="name" id="name"
+                 placeholder="User Name" type="text">
+        </span>
+          </div>
+          <div class="w-full">
+            <label class="block mb-1 text-color text-base" for="familyName">Last Name</label>
+            <span
+              class="p-input-icon-left w-full">
+        <i class="pi pi-user"></i>
+        <input class="p-inputtext p-component p-element w-full" formControlName="familyName" id="familyName"
+               placeholder="Family Name" type="text">
+        </span>
+          </div>
+          <div class="w-full">
+            <label class="block mb-1 text-color text-base" for="numberOfParticipants">Role</label>
+            <span class="p-input-icon-left w-full"><i class="pi pi-user"></i>
+                    <select class="p-inputtext p-component p-element w-full" formControlName="role"
+                            id="numberOfParticipants">
+                      <option value="0">Select An Option</option>
+                      <option value="ROLE_MEMBER">CARTE_RESIDENCE</option>
+                      <option value="ROLE_JURY">CIN</option>
+                      <option value="ROLE_JURY">PASSPORT</option>
+                    </select>
+            </span>
+          </div>
+        </div>
+        <div>
+          <label class="block mb-1 text-color text-base" for="accessionDate">Accession Date</label>
+          <span class="p-input-icon-left w-full">
+      <i class="pi pi-calendar"></i>
+      <input class="p-inputtext p-component p-element w-full" formControlName="accessionDate" id="accessionDate"
+             type="date">
+      </span>
+        </div>
+        <div>
+          <label class="block mb-1 text-color text-base" for="nationality">Nationality</label>
+          <span class="p-input-icon-left w-full">
+        <i class="pi pi-flag"></i>
+        <input class="p-inputtext p-component p-element w-full" formControlName="nationality" id="nationality"
+               placeholder="Member Nationality" type="text">
+      </span>
+        </div>
+        <div class="flex gap-3">
+          <div class="w-full">
+            <label class="block mb-1 text-color text-base" for="identityDocument">Identity Document</label>
+            <span
+              class="p-input-icon-left w-full">
+          <i class="pi pi-file"></i>
+          <select class="p-inputtext p-component p-element w-full" formControlName="identityDocument"
+                  id="identityDocument">
+            <option value="">Select Option</option>
+            <option value="CIN">CIN</option>
+            <option value="CARTE_RESIDENCE">CARTE RESIDENCE</option>
+            <option value="PASSPORT">PASSPORT</option>
+          </select>
+        </span>
+          </div>
+          <div class="w-full">
+            <label class="block mb-1 text-color text-base" for="identityNumber">Identity Number</label>
+            <span
+              class="p-input-icon-left w-full">
+        <i class="pi pi-briefcase"></i>
+        <input class="p-inputtext p-component p-element w-full" formControlName="identityNumber"
+               id="identityNumber" placeholder="Member Identity Number" type="text">
+        </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-3">
+      <button (click)="register()" [disabled]="registerForm.invalid" class="p-element p-ripple w-full p-3 p-button p-component"><span
         aria-hidden="true" class="p-button-icon p-button-icon-left pi pi-user"></span><span
-        class="p-button-label">Sign Up</span><span class="p-ink"></span></button>
+        class="p-button-label">REGISTER</span><span class="p-ink"></span>
+      </button>
     </div>
   </div>
   <div

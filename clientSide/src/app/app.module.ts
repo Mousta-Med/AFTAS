@@ -17,7 +17,7 @@ import {InputTextModule} from "primeng/inputtext";
 import {RippleModule} from "primeng/ripple";
 import {ButtonModule} from "primeng/button";
 import {TableModule} from "primeng/table";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { MemberTableComponent } from './components/memberComponents/member-table/member-table.component';
 import { ManageMemberComponent } from './components/memberComponents/manage-member/manage-member.component';
 import {SidebarModule} from "primeng/sidebar";
@@ -43,11 +43,12 @@ import { LoginComponent } from './components/homeComponents/login/login.componen
 import { RegisterComponent } from './components/homeComponents/register/register.component';
 import {CheckboxModule} from "primeng/checkbox";
 import {MessageModule} from "primeng/message";
+import {HttpInterceptorService} from "./services/interceptor/http-interceptor.service";
 
 @NgModule({
   declarations: [AppComponent, PagenotfoundComponent, HomeComponent, DashboardComponent, MenuBarComponent, MenuItemComponent, MemberComponent, CompetitionComponent, MemberTableComponent, ManageMemberComponent, CompetitionCardComponent, ManageCompetitionComponent, CompetitionInfoComponent, RankingComponent, HuntingComponent, ManageHuntingComponent, LoginComponent, RegisterComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule, MenuModule, FontAwesomeModule, MenubarModule, InputTextModule, RippleModule, ButtonModule, TableModule, SidebarModule, DialogModule, ToastModule, ConfirmDialogModule, FormsModule, ChipModule, DropdownModule, TagModule, TabMenuModule, SelectButtonModule, PaginatorModule, CheckboxModule, MessageModule],
-  providers: [MessageService, ConfirmationService],
+  providers: [MessageService, ConfirmationService, {provide: HTTP_INTERCEPTORS,useClass: HttpInterceptorService,multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule {

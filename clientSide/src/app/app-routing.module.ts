@@ -8,37 +8,45 @@ import {MemberComponent} from "./components/memberComponents/member/member.compo
 import {CompetitionInfoComponent} from "./components/competionComponents/competition-info/competition-info.component";
 import {LoginComponent} from "./components/homeComponents/login/login.component";
 import {RegisterComponent} from "./components/homeComponents/register/register.component";
+import {AccessGuardService, IsJury, IsManager, IsMember, IsSigned} from "./services/guard/access-guard.service";
 
 const routes: Routes = [
   {
     path: "",
     component: HomeComponent,
+    canActivate: [AccessGuardService],
     children: [
       {
         path:"",
+        canActivate: [IsMember],
         component: DashboardComponent
       },
       {
         path:"competitions",
+        canActivate: [IsJury],
         component: CompetitionComponent
       },
       {
         path:"members",
+        canActivate: [IsManager],
         component: MemberComponent
       },
       {
         path:"competition/:code",
+        canActivate: [IsMember],
         component: CompetitionInfoComponent
       }
     ]
   },
   {
     path: "login",
-    component: LoginComponent
+    component: LoginComponent,
+    canActivate: [IsSigned]
   }
   ,
   {
     path: "register",
+    canActivate: [IsSigned],
     component: RegisterComponent
   },
   {
